@@ -30,8 +30,12 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 20, 255, 118)),
+        primaryColor: Colors.blue,
+        primaryColorDark: Colors.blue[900],
+        primaryColorLight: Colors.blue[100],
+
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 20, 255, 118)),
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
@@ -99,6 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
       //   // title: Text(widget.title),
       // ),
       body: Container(
+        // height: screenSize.height,
+        // width: screenSize.width * 72,
         decoration: BoxDecoration(
             image: DecorationImage(
           image: const AssetImage('assets/backgrounds/background.png'),
@@ -126,24 +132,31 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                // width: screenSize.width * 0.75,
-                // height: screenSize.height * 0.3,
+                width: screenSize.width * 0.75,
+                height: screenSize.height * 0.3,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.lightGreen,
-                    width: 1,
+                    width: 0,
                   ),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(40),
                 ),
-                child: Image.asset(
-                  'assets/images/demo-button-2.png',
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.asset(
+                    'assets/images/resoplaceholder.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
+              const SizedBox(height: 10), // Add vertical space between buttons
               const Text(
                 'You have pushed the button this many times:',
                 style: TextStyle(
-                    color: Colors.white, backgroundColor: Colors.black),
+                    color: Colors.white,
+                    backgroundColor: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 10), // Add vertical space between buttons
               buildElevatedButton(
