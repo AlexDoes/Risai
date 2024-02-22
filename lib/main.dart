@@ -15,25 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Reso',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         primaryColor: Colors.blue,
         primaryColorDark: Colors.blue[900],
         primaryColorLight: Colors.blue[100],
-
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 20, 255, 118)),
         primarySwatch: Colors.blue,
@@ -47,10 +31,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
@@ -63,13 +43,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  // void _incrementCounter() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10), // Add vertical space between buttons
+              const SizedBox(height: 10),
               const Text(
                 'You have pushed the button this many times:',
                 style: TextStyle(
@@ -158,21 +138,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 15,
                     fontWeight: FontWeight.w400),
               ),
-              const SizedBox(height: 10), // Add vertical space between buttons
+              const SizedBox(height: 10),
               buildElevatedButton(
                 onPressed: () => log(1),
                 text: 'Play now',
                 widthMultiplier: 0.4,
                 height: 50,
               ),
-              const SizedBox(height: 10), // Add vertical space between buttons
+              const SizedBox(height: 10),
               buildElevatedButton(
                 onPressed: () => log(1),
                 text: 'Leaderboard',
                 widthMultiplier: 0.4,
                 height: 50,
               ),
-              const SizedBox(height: 10), // Add vertical space between buttons
+              const SizedBox(height: 10),
               buildElevatedButton(
                 onPressed: () => log(1),
                 text: 'Settings',
@@ -182,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
