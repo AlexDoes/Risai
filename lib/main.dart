@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+// ignore: unused_import
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -55,23 +57,62 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    ElevatedButton buildElevatedButton({
+    TextButton buildTextButton({
       required VoidCallback onPressed,
       required String text,
       required double widthMultiplier,
       required double height,
     }) {
-      return ElevatedButton(
+      return TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
           maximumSize: MaterialStateProperty.all<Size?>(
-            Size(screenSize.width * 0.9, double.infinity),
+            Size(screenSize.width * 0.6, height * 1.25),
           ),
           minimumSize: MaterialStateProperty.all<Size?>(
-            Size(screenSize.width * widthMultiplier, height),
+            Size(screenSize.width * 0.5, height * 1.25),
           ),
         ),
-        child: Text(text),
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xfffaf2a3), Color(0xffffca6f)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.circular(19.0),
+            border: Border.all(
+              color: const Color(0xff2c7dbf),
+              width: 2.5,
+            ),
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            child: Stack(
+              children: <Widget>[
+                // Stroked text as border.
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 20,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 4
+                      ..color = const Color.fromARGB(255, 113, 177, 241),
+                  ),
+                ),
+                // Solid text as fill.
+                Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 255, 252, 252),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
 
@@ -130,31 +171,45 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'You have pushed the button this many times:',
-                style: TextStyle(
-                    color: Colors.white,
-                    backgroundColor: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400),
+              Container(
+                // To provide both, use "decoration: BoxDecoration(color: color)".)
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 21, 212, 241),
+                  // color: const Color.fromARGB(255, 21, 212, 241),
+                  borderRadius:
+                      BorderRadius.circular(15), // Set the border radius here
+                ),
+                child: GestureDetector(
+                  onTap: () => print('Reso'),
+                  child: const Text(
+                    'Reso',
+                    style: TextStyle(
+                      color: Colors.white,
+                      backgroundColor: Color.fromARGB(255, 21, 212, 241),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 10),
-              buildElevatedButton(
-                onPressed: () => log(1),
+              buildTextButton(
+                onPressed: () => print('Let\'s play'),
                 text: 'Play now',
                 widthMultiplier: 0.4,
                 height: 50,
               ),
               const SizedBox(height: 10),
-              buildElevatedButton(
-                onPressed: () => log(1),
-                text: 'Leaderboard',
+              buildTextButton(
+                onPressed: () => print('hello world'),
+                text: 'こんにちは、世界', // Hello world
                 widthMultiplier: 0.4,
                 height: 50,
               ),
               const SizedBox(height: 10),
-              buildElevatedButton(
-                onPressed: () => log(1),
+              buildTextButton(
+                onPressed: () => print('Settings engaged'),
                 text: 'Settings',
                 widthMultiplier: 0.4,
                 height: 50,
