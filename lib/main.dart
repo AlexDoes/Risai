@@ -25,6 +25,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
+      routes: {
+        //   '/': (context) => const MyHomePage(title: 'Reso'),
+        '/game': (context) => const GamePage(title: 'Game'),
+      },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -195,7 +199,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 10),
               buildTextButton(
-                onPressed: () => print('Let\'s play'),
+                onPressed: () {
+                  print('Let\'s play');
+                  Navigator.pushNamed(context, '/game');
+                },
                 text: 'Play now',
                 widthMultiplier: 0.4,
                 height: 50,
@@ -218,6 +225,71 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class GamePage extends StatefulWidget {
+  const GamePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends State<GamePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Game Page"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            buildHiScoreButton(1000),
+            const SizedBox(height: 20),
+            buildHiScoreButton(2000),
+            const SizedBox(height: 20),
+            buildHiScoreButton(3000),
+            const SizedBox(height: 20),
+            buildHiScoreButton(4000),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // setState(() {
+          //   _counter++;
+          // });
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  TextButton buildHiScoreButton(
+    // VoidCallback onPressed,
+    int hiScore,
+    // double widthMultiplier,
+    // double height,
+  ) {
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          const Color.fromARGB(255, 21, 212, 241),
+        ),
+        minimumSize: MaterialStateProperty.all<Size?>(
+          const Size(100, 50),
+        ),
+      ),
+      onPressed: () {
+        print(hiScore);
+      },
+      child: Text(hiScore.toString()),
     );
   }
 }
