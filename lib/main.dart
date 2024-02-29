@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 20, 255, 118)),
         primarySwatch: Colors.blue,
         useMaterial3: true,
+        fontFamily: 'NampulaCity',
+        fontFamilyFallback: const ['MondayRamen'],
       ),
       routes: {
         //   '/': (context) => const MyHomePage(title: 'Reso'),
@@ -98,18 +101,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text(
                   text,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
                       ..strokeWidth = 4
                       ..color = const Color.fromARGB(255, 113, 177, 241),
                   ),
-                ),
+                )
+                // .animate(
+                // onPlay: (controller) =>
+                // controller.loop(reverse: true, count: 3))
+                // .tint(color: Colors.red, blendMode: BlendMode.colorDodge),
                 // Solid text as fill.
+                ,
                 Text(
                   text,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
                     color: Color.fromARGB(255, 255, 252, 252),
                   ),
                 ),
@@ -141,88 +149,117 @@ class _MyHomePageState extends State<MyHomePage> {
         )),
         child: Center(
           child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            //
-            // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-            // action in the IDE, or press "p" in the console), to see the
-            // wireframe for each widget.
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: screenSize.width * 0.75,
-                height: screenSize.height * 0.3,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.lightGreen,
-                    width: 0,
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              //
+              // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+              // action in the IDE, or press "p" in the console), to see the
+              // wireframe for each widget.
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: screenSize.width * 0.75,
+                  height: screenSize.height * 0.3,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.lightGreen,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.circular(40),
                   ),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Image.asset(
-                    'assets/images/resoplaceholder.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                // To provide both, use "decoration: BoxDecoration(color: color)".)
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 21, 212, 241),
-                  // color: const Color.fromARGB(255, 21, 212, 241),
-                  borderRadius:
-                      BorderRadius.circular(15), // Set the border radius here
-                ),
-                child: GestureDetector(
-                  onTap: () => print('Reso'),
-                  child: const Text(
-                    'Reso',
-                    style: TextStyle(
-                      color: Colors.white,
-                      backgroundColor: Color.fromARGB(255, 21, 212, 241),
-                      fontSize: 30,
-                      fontWeight: FontWeight.w400,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.asset(
+                      // 'assets/images/resoplaceholder.png',
+                      'assets/images/tp.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              buildTextButton(
-                onPressed: () {
-                  print('Let\'s play');
-                  Navigator.pushNamed(context, '/game');
-                },
-                text: 'Play now',
-                widthMultiplier: 0.4,
-                height: 50,
-              ),
-              const SizedBox(height: 10),
-              buildTextButton(
-                onPressed: () => print('hello world'),
-                text: 'こんにちは、世界', // Hello world
-                widthMultiplier: 0.4,
-                height: 50,
-              ),
-              const SizedBox(height: 10),
-              buildTextButton(
-                onPressed: () => print('Settings engaged'),
-                text: 'Settings',
-                widthMultiplier: 0.4,
-                height: 50,
-              ),
-            ],
-          ),
+                const SizedBox(height: 10),
+                Container(
+                  // To provide both, use "decoration: BoxDecoration(color: color)".)
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 21, 212, 241),
+                    // color: const Color.fromARGB(255, 21, 212, 241),
+                    borderRadius:
+                        BorderRadius.circular(15), // Set the border radius here
+                  ),
+                  child: GestureDetector(
+                    onTap: () => print('Reso'),
+                    child: const Text(
+                      'Reso',
+                      style: TextStyle(
+                        color: Colors.white,
+                        backgroundColor: Color.fromARGB(255, 21, 212, 241),
+                        fontSize: 40,
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Column(
+                  children: [
+                    buildTextButton(
+                      onPressed: () {
+                        print('Let\'s play');
+                        Navigator.pushNamed(context, '/game');
+                      },
+                      text: 'Play now',
+                      widthMultiplier: 0.4,
+                      height: 50,
+                    )
+                        .animate(
+                          // delay: 1000.ms,
+                          // duration: 1.5.seconds,
+
+                          onPlay: (controller) => controller.loop(
+                            reverse: true,
+                            // period: 1.seconds,
+                            count: 3,
+                            // period: 10.seconds,
+                          ),
+                        )
+                        // .slide(curve: Curves.easeIn),
+                        .slideY(
+                            duration: Duration(milliseconds: 1000),
+                            begin: -0,
+                            end: .07),
+                    const SizedBox(height: 10),
+                    buildTextButton(
+                      onPressed: () => print('hello world'),
+                      text: 'こんにちは、世界', // Hello world
+                      widthMultiplier: 0.4,
+                      height: 50,
+                    ),
+                    const SizedBox(height: 10),
+                    buildTextButton(
+                      onPressed: () => print('Settings engaged'),
+                      text: 'Settings',
+                      widthMultiplier: 0.4,
+                      height: 50,
+                    ),
+                  ]
+                      .animate(
+                        interval: const Duration(milliseconds: 250),
+                      )
+                      .slideX(
+                        curve: Curves.easeIn,
+                        // duration: Duration(seconds: 1))
+                      ),
+                  // .slideY(curve: Curves.easeIn)
+                  // .fadeIn(),
+                ),
+              ]),
         ),
       ),
     );
