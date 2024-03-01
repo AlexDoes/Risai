@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,6 +60,35 @@ class _MyHomePageState extends State<MyHomePage> {
   //     _counter++;
   //   });
   // }
+  bool isMuted = false;
+  final player = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      isMuted = false;
+    });
+    player.setSource(AssetSource('music/rbgm.wav'));
+    player.resume();
+    // player.release();
+    // loop();
+    // player.play(AssetSource('music/rbgm.wav')); // comment back in to play music
+  }
+
+  void loop() {
+    player.setReleaseMode(ReleaseMode.loop);
+  }
+
+  playSound() async {
+    print('Playing sound');
+    await player.resume();
+  }
+
+  stopSound() async {
+    print('Stopping sound');
+    await player.pause();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,20 +165,21 @@ class _MyHomePageState extends State<MyHomePage> {
       //   // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       //   // title: Text(widget.title),
       // ),
-      body: Container(
-        // height: screenSize.height,
-        // width: screenSize.width * 72,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: const AssetImage('assets/backgrounds/background.png'),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
-            BlendMode.darken,
-          ),
-        )),
-        child: Center(
-          child: Column(
+      body: Stack(children: [
+        Container(
+          // height: screenSize.height,
+          // width: screenSize.width * 72,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image: const AssetImage('assets/backgrounds/background.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
+              BlendMode.darken,
+            ),
+          )),
+          child: Center(
+            child: Column(
               // Column is also a layout widget. It takes a list of children and
               // arranges them vertically. By default, it sizes itself to fit its
               // children horizontally, and tries to be as tall as its parent.
@@ -225,15 +256,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           onPlay: (controller) => controller.loop(
                             reverse: true,
                             // period: 1.seconds,
-                            count: 3,
+                            count: 11,
                             // period: 10.seconds,
                           ),
                         )
                         // .slide(curve: Curves.easeIn),
-                        .slideY(
-                            duration: Duration(milliseconds: 1000),
-                            begin: -0,
-                            end: .07),
+                        // .slideY(
+                        //     duration: Duration(milliseconds: 1000),
+                        //     begin: -0,
+                        //     end: .075)
+                        // .tint(color: Colors.red, curve: Curves.easeIn)
+                        .scaleXY(begin: 1.1, end: 1, duration: 1.seconds),
                     const SizedBox(height: 10),
                     buildTextButton(
                       onPressed: () => print('hello world'),
@@ -259,9 +292,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   // .slideY(curve: Curves.easeIn)
                   // .fadeIn(),
                 ),
-              ]),
+                IconButton(
+                    icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 21, 212, 241),
+                        ),
+                        textStyle: MaterialStateProperty.all<TextStyle>(
+                          const TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        iconColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 254, 254, 254),
+                        )),
+                    onPressed: () async {
+                      if (isMuted) {
+                        await playSound();
+                      } else {
+                        await stopSound();
+                      }
+                      setState(() {
+                        isMuted = !isMuted;
+                      });
+                    })
+              ],
+            ),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }
