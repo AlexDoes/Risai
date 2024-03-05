@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 // ignore: unused_import
-import 'dart:math';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -19,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Reso',
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 185, 231, 238),
         primaryColor: Colors.blue,
         primaryColorDark: Colors.blue[900],
         primaryColorLight: Colors.blue[100],
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         //   '/': (context) => const MyHomePage(title: 'Reso'),
         '/game': (context) => const GamePage(title: 'Game'),
       },
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Reso Game Page'),
     );
   }
 }
@@ -53,46 +53,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
-
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
-  bool isMuted = false;
-  final player = AudioPlayer();
+  final background = Image.asset("assets/backgrounds/background.png");
 
   @override
-  void initState() {
-    super.initState();
-    setState(() {
-      isMuted = false;
-    });
-    player.setSource(AssetSource('music/rbgm.wav'));
-    player.resume();
-    // player.release();
-    // loop();
-    // player.play(AssetSource('music/rbgm.wav')); // comment back in to play music
-  }
-
-  void loop() {
-    player.setReleaseMode(ReleaseMode.loop);
-  }
-
-  playSound() async {
-    print('Playing sound');
-    await player.resume();
-  }
-
-  stopSound() async {
-    print('Stopping sound');
-    await player.pause();
+  void didChangeDependencies() {
+    precacheImage(background.image, context);
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    precacheImage(background.image, context);
+    // precacheImage(
+    //     const AssetImage('assets/backgrounds/background.png'), context);
 
     TextButton buildTextButton({
       required VoidCallback onPressed,
@@ -171,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // width: screenSize.width * 72,
           decoration: BoxDecoration(
               image: DecorationImage(
-            image: const AssetImage('assets/backgrounds/background.png'),
+            image: background.image,
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
@@ -220,7 +194,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 21, 212, 241),
-                    // color: const Color.fromARGB(255, 21, 212, 241),
                     borderRadius:
                         BorderRadius.circular(15), // Set the border radius here
                   ),
@@ -250,14 +223,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 50,
                     )
                         .animate(
-                          // delay: 1000.ms,
-                          // duration: 1.5.seconds,
-
                           onPlay: (controller) => controller.loop(
                             reverse: true,
-                            // period: 1.seconds,
                             count: 11,
-                            // period: 10.seconds,
                           ),
                         )
                         // .slide(curve: Curves.easeIn),
@@ -283,6 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ]
                       .animate(
+                        delay: const Duration(milliseconds: 300),
                         interval: const Duration(milliseconds: 250),
                       )
                       .slideX(
@@ -292,36 +261,101 @@ class _MyHomePageState extends State<MyHomePage> {
                   // .slideY(curve: Curves.easeIn)
                   // .fadeIn(),
                 ),
-                IconButton(
-                    icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 21, 212, 241),
-                        ),
-                        textStyle: MaterialStateProperty.all<TextStyle>(
-                          const TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        iconColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 254, 254, 254),
-                        )),
-                    onPressed: () async {
-                      if (isMuted) {
-                        await playSound();
-                      } else {
-                        await stopSound();
-                      }
-                      setState(() {
-                        isMuted = !isMuted;
-                      });
-                    })
+                const MyAudioPlayer(),
               ],
             ),
           ),
         ),
       ]),
     );
+  }
+}
+
+class MyAudioPlayer extends StatefulWidget {
+  const MyAudioPlayer({Key? key}) : super(key: key);
+
+  @override
+  State<MyAudioPlayer> createState() => _MyAudioPlayerState();
+}
+
+class _MyAudioPlayerState extends State<MyAudioPlayer> {
+  bool isMuted = false;
+  late AudioPlayer player;
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+    _loadMutedState();
+  }
+
+  @override
+  void didUpdateWidget(MyAudioPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.key != widget.key) {
+      // Widget is being recreated, dispose old resources and initialize new ones
+      player.dispose();
+      player = AudioPlayer();
+      _loadMutedState();
+    }
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  _loadMutedState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isMuted = prefs.getBool('isMuted') ?? false;
+      if (!isMuted) {
+        player.setSource(
+            AssetSource('music/rbgm.wav')); // Set audio source if not muted
+        player.play(AssetSource('music/rbgm.wav')); // Play audio if not muted
+      } // If no value found, default to false
+    });
+  }
+
+  _toggleMute() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isMuted = !isMuted;
+      prefs.setBool('isMuted', isMuted);
+      if (isMuted) {
+        player.stop(); // Stop audio if muted
+      } else {
+        player.setSource(
+            AssetSource('music/rbgm.wav')); // Set audio source if not muted
+        player.play(AssetSource('music/rbgm.wav')); // Play audio if not muted
+      }
+    });
+  }
+
+  void loop() {
+    player.setReleaseMode(ReleaseMode.loop);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color.fromARGB(255, 21, 212, 241),
+            ),
+            textStyle: MaterialStateProperty.all<TextStyle>(
+              const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            iconColor: MaterialStateProperty.all<Color>(
+              const Color.fromARGB(255, 254, 254, 254),
+            )),
+        onPressed: () async {
+          _toggleMute();
+        });
   }
 }
 
