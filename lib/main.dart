@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:reso/pages/game_page.dart';
+import 'package:reso/pages/unity_web_game_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         //   '/': (context) => const MyHomePage(title: 'Reso'),
-        '/game': (context) => const GamePage(),
+        // '/game': (context) => const GamePage(),
+        '/game': (context) => const UnityWebGamePage(),
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
