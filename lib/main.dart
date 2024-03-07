@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:reso/pages/game_page.dart';
+import 'package:reso/pages/unity_web_game_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +33,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         //   '/': (context) => const MyHomePage(title: 'Reso'),
-        '/game': (context) => const GamePage(title: 'Game'),
+        // '/game': (context) => const GamePage(),
+        '/game': (context) => const UnityWebGamePage(),
       },
       home: const MyHomePage(title: 'Reso Game Page'),
     );
@@ -359,67 +362,67 @@ class _MyAudioPlayerState extends State<MyAudioPlayer> {
   }
 }
 
-class GamePage extends StatefulWidget {
-  const GamePage({super.key, required this.title});
+// class GamePage extends StatefulWidget {
+//   const GamePage({super.key, required this.title});
 
-  final String title;
+//   final String title;
 
-  @override
-  State<GamePage> createState() => _GamePageState();
-}
+//   @override
+//   State<GamePage> createState() => _GamePageState();
+// }
 
-class _GamePageState extends State<GamePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Game Page"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            buildHiScoreButton(1000),
-            const SizedBox(height: 20),
-            buildHiScoreButton(2000),
-            const SizedBox(height: 20),
-            buildHiScoreButton(3000),
-            const SizedBox(height: 20),
-            buildHiScoreButton(4000),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // setState(() {
-          //   _counter++;
-          // });
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
+// class _GamePageState extends State<GamePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Game Page"),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             buildHiScoreButton(1000),
+//             const SizedBox(height: 20),
+//             buildHiScoreButton(2000),
+//             const SizedBox(height: 20),
+//             buildHiScoreButton(3000),
+//             const SizedBox(height: 20),
+//             buildHiScoreButton(4000),
+//           ],
+//         ),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           // setState(() {
+//           //   _counter++;
+//           // });
+//         },
+//         tooltip: 'Increment',
+//         child: const Icon(Icons.add),
+//       ),
+//     );
+//   }
 
-  TextButton buildHiScoreButton(
-    // VoidCallback onPressed,
-    int hiScore,
-    // double widthMultiplier,
-    // double height,
-  ) {
-    return TextButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          const Color.fromARGB(255, 21, 212, 241),
-        ),
-        minimumSize: MaterialStateProperty.all<Size?>(
-          const Size(100, 50),
-        ),
-      ),
-      onPressed: () {
-        print(hiScore);
-      },
-      child: Text(hiScore.toString()),
-    );
-  }
-}
+//   TextButton buildHiScoreButton(
+//     // VoidCallback onPressed,
+//     int hiScore,
+//     // double widthMultiplier,
+//     // double height,
+//   ) {
+//     return TextButton(
+//       style: ButtonStyle(
+//         backgroundColor: MaterialStateProperty.all<Color>(
+//           const Color.fromARGB(255, 21, 212, 241),
+//         ),
+//         minimumSize: MaterialStateProperty.all<Size?>(
+//           const Size(100, 50),
+//         ),
+//       ),
+//       onPressed: () {
+//         print(hiScore);
+//       },
+//       child: Text(hiScore.toString()),
+//     );
+//   }
+// }
