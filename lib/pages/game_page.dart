@@ -10,7 +10,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   UnityWidgetController? _unityWidgetController;
-  int _buttonValue = 1000; 
+  int _buttonValue = 1000;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,6 @@ class _GamePageState extends State<GamePage> {
     _unityWidgetController = controller;
   }
 
-  
   void sendIntValueToUnity(int value) {
     _unityWidgetController?.postMessage(
       'Score Manager',

@@ -15,21 +15,32 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(
-        bottom: false,
-        child: WillPopScope(
-          onWillPop: () async {
-            // Pop the category page if Android back button is pressed.
-            return true;
-          },
-          child: Container(
-            color: Colors.yellow,
-            child: UnityWidget(
-              onUnityCreated: onUnityCreated,
+        child: Column(
+          children: [
+            Center(
+              child: SizedBox(
+                width: screenSize.height * 0.46220302375,
+                height: screenSize.height,
+                // bottom: false,
+                child: PopScope(
+                  // onWillPop: () async {
+                  //   // Pop the category page if Android back button is pressed.
+                  //   return true;
+                  // },
+                  child: Container(
+                    color: Colors.yellow,
+                    child: UnityWidget(
+                      onUnityCreated: onUnityCreated,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

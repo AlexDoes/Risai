@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:reso/pages/game_page.dart';
+// import 'package:reso/pages/game_page.dart';
 import 'package:reso/pages/unity_web_game_page.dart';
 
 void main() {
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Locale currentLocale = Localizations.localeOf(context);
     return MaterialApp(
       title: 'Reso',
       theme: ThemeData(
