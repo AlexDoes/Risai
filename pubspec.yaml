@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.0.6
   flutter_animate: ^4.5.0
   flutter_unity_widget: ^2022.2.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_native_splash: ^2.2.0+1
@@ -59,30 +60,31 @@ dev_dependencies:
 # flutter clean
 # flutter pub get
 # flutter pub run flutter_native_splash:create
+# flutter pub run flutter_launcher_icons
 flutter_native_splash:
-  color: "#42a5f5"
-  # backgroundImage: "assets/backgrounds/background.png"
-  image: "assets/images/tp.png"
+  color: "A7C2CC"
+  image: "assets/images/mascotshadow.png"
   android: true
   ios: true
+  web: true
 # The following section is specific to Flutter packages.
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/tp.png"
+  image_path: "assets/images/mascotgreen.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/tp.png"
+    image_path: "assets/images/mascotshadow.png"
     # background_color: "#hexcode"
     # theme_color: "#hexcode"
   windows:
     generate: true
-    image_path: "assets/images/tp.png"
+    image_path: "assets/images/mascotgreen.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/tp.png"
+    image_path: "assets/images/mascotgreen.png"
 
 flutter:
   # The following line ensures that the Material Icons font is

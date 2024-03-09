@@ -10,7 +10,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   UnityWidgetController? _unityWidgetController;
-  int _buttonValue = 1000;
+  final _buttonValue = 1000;
 
   @override
   Widget build(BuildContext context) {

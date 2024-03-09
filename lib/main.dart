@@ -6,6 +6,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:audioplayers/audioplayers.dart';
 // import 'package:reso/pages/game_page.dart';
 import 'package:reso/pages/unity_web_game_page.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:auto_size_text/auto_size_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,7 +60,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final background = Image.asset("assets/backgrounds/background.png");
-
+  final mascot = Image.asset("assets/images/mascot.png");
+  late double maxWidth;
+  late double maxHeight;
   @override
   void didChangeDependencies() {
     precacheImage(background.image, context);
@@ -67,11 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // var fontSize = maxWidth * 0.1;
     Size screenSize = MediaQuery.of(context).size;
     precacheImage(background.image, context);
-    // precacheImage(
-    //     const AssetImage('assets/backgrounds/background.png'), context);
-
+    precacheImage(mascot.image, context);
     TextButton buildTextButton({
       required VoidCallback onPressed,
       required String text,
@@ -82,10 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: onPressed,
         style: ButtonStyle(
           maximumSize: MaterialStateProperty.all<Size?>(
-            Size(screenSize.width * 0.6, height * 1.25),
+            Size(maxWidth * 0.6, height * 1.25),
           ),
           minimumSize: MaterialStateProperty.all<Size?>(
-            Size(screenSize.width * 0.5, height * 1.25),
+            Size(maxWidth * 0.5, height * 1.25),
           ),
         ),
         child: Ink(
@@ -106,8 +109,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Stack(
               children: <Widget>[
                 // Stroked text as border.
-                Text(
+                AutoSizeText(
                   text,
+                  maxLines: 1,
                   style: TextStyle(
                     fontSize: 25,
                     foreground: Paint()
@@ -115,15 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ..strokeWidth = 4
                       ..color = const Color.fromARGB(255, 113, 177, 241),
                   ),
-                )
-                // .animate(
-                // onPlay: (controller) =>
-                // controller.loop(reverse: true, count: 3))
-                // .tint(color: Colors.red, blendMode: BlendMode.colorDodge),
-                // Solid text as fill.
-                ,
-                Text(
+                ),
+                AutoSizeText(
                   text,
+                  maxLines: 1,
                   style: const TextStyle(
                     fontSize: 25,
                     color: Color.fromARGB(255, 255, 252, 252),
@@ -136,141 +135,176 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
 
+    kIsWeb
+        ? (
+            maxHeight = screenSize.height,
+            maxWidth = screenSize.height * .60,
+          )
+        : (
+            maxWidth = 500,
+            maxHeight = 500,
+          );
+
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   // title: Text(widget.title),
-      // ),
-      body: Stack(children: [
-        Container(
-          // height: screenSize.height,
-          // width: screenSize.width * 72,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: background.image,
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
-              BlendMode.darken,
-            ),
-          )),
-          child: Center(
-            child: Column(
-              // Column is also a layout widget. It takes a list of children and
-              // arranges them vertically. By default, it sizes itself to fit its
-              // children horizontally, and tries to be as tall as its parent.
-              //
-              // Column has various properties to control how it sizes itself and
-              // how it positions its children. Here we use mainAxisAlignment to
-              // center the children vertically; the main axis here is the vertical
-              // axis because Columns are vertical (the cross axis would be
-              // horizontal).
-              //
-              // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-              // action in the IDE, or press "p" in the console), to see the
-              // wireframe for each widget.
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+      body: SafeArea(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              // heightFactor: 1,
+              child: Stack(children: [
                 Container(
-                  width: screenSize.width * 0.75,
-                  height: screenSize.height * 0.3,
+                  height: screenSize.height,
+                  width: screenSize.width,
+                  constraints: kIsWeb
+                      ? BoxConstraints(maxWidth: maxWidth, maxHeight: maxHeight)
+                      : null,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.lightGreen,
-                      width: 3,
+                      image: DecorationImage(
+                    image: background.image,
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
+                      BlendMode.darken,
                     ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image.asset(
-                      // 'assets/images/resoplaceholder.png',
-                      'assets/images/tp.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  // To provide both, use "decoration: BoxDecoration(color: color)".)
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 21, 212, 241),
-                    borderRadius:
-                        BorderRadius.circular(15), // Set the border radius here
-                  ),
-                  child: GestureDetector(
-                    onTap: () => print('Reso'),
-                    child: const Text(
-                      'Reso',
-                      style: TextStyle(
-                        color: Colors.white,
-                        backgroundColor: Color.fromARGB(255, 21, 212, 241),
-                        fontSize: 40,
-                        fontWeight: FontWeight.w100,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Column(
-                  children: [
-                    buildTextButton(
-                      onPressed: () {
-                        print('Let\'s play');
-                        Navigator.pushNamed(context, '/game');
-                      },
-                      text: 'Play now',
-                      widthMultiplier: 0.4,
-                      height: 50,
-                    )
-                        .animate(
-                          onPlay: (controller) => controller.loop(
-                            reverse: true,
-                            count: 11,
+                  )),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: screenSize.width * 0.75,
+                          height: screenSize.height * 0.5,
+                          constraints: BoxConstraints(
+                            maxHeight: maxHeight,
+                            maxWidth: maxWidth,
+                          ),
+                          decoration: BoxDecoration(
+                            // border: Border.all(
+                            //   color: Colors.lightGreen,
+                            //   // width: 3,
+                            // ),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(40),
+                            child:
+                                Image(image: mascot.image, fit: BoxFit.cover),
                           ),
                         )
-                        // .slide(curve: Curves.easeIn),
-                        // .slideY(
-                        //     duration: Duration(milliseconds: 1000),
-                        //     begin: -0,
-                        //     end: .075)
-                        // .tint(color: Colors.red, curve: Curves.easeIn)
-                        .scaleXY(begin: 1.1, end: 1, duration: 1.seconds),
-                    const SizedBox(height: 10),
-                    buildTextButton(
-                      onPressed: () => print('hello world'),
-                      text: 'こんにちは、世界', // Hello world
-                      widthMultiplier: 0.4,
-                      height: 50,
+                            .animate(
+                              delay: const Duration(milliseconds: 300),
+                              onPlay: (controller) => controller.loop(
+                                reverse: true,
+                                count: 12,
+                              ),
+                            )
+                            .slideX(
+                                curve: Curves.easeIn,
+                                duration: 1200.ms,
+                                begin: 0,
+                                end: .005)
+                            .slideY(
+                                curve: Curves.easeIn,
+                                duration: 1200.ms,
+                                begin: 0,
+                                end: -.01),
+                        const SizedBox(height: 10),
+                        Container(
+                          // To provide both, use "decoration: BoxDecoration(color: color)".)
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 21, 212, 241),
+                            borderRadius: BorderRadius.circular(
+                                15), // Set the border radius here
+                          ),
+                          child: GestureDetector(
+                            onTap: () => print('Reso'),
+                            child: const Text(
+                              'Reso',
+                              style: TextStyle(
+                                color: Colors.white,
+                                backgroundColor:
+                                    Color.fromARGB(255, 21, 212, 241),
+                                fontSize: 40,
+                                fontWeight: FontWeight.w100,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          children: [
+                            buildTextButton(
+                              onPressed: () {
+                                print('Let\'s play');
+                                Navigator.pushNamed(context, '/game');
+                              },
+                              text: 'Play now',
+                              widthMultiplier: 0.4,
+                              height: 50,
+                            )
+                                .animate(
+                                  delay: 1.seconds,
+                                  onPlay: (controller) => controller.loop(
+                                    // reverse: true,
+                                    count: 6,
+                                  ),
+                                )
+                                .shimmer(
+                                  duration: 2000.ms,
+                                  size: .5,
+                                  // color: Color.fromARGB(90, 50, 50, 4),
+                                  // color: Colors.purple,
+                                  // size: 0.1
+                                )
+                                .animate(
+                                  onPlay: (controller) => controller.loop(
+                                    reverse: true,
+                                    count: 11,
+                                  ),
+                                )
+                                .scaleXY(
+                                    begin: 1.03, end: 1, duration: 2.seconds),
+                            const SizedBox(height: 10),
+                            buildTextButton(
+                              onPressed: () => print('hello world'),
+                              text: 'こんにちは、世界', // Hello world
+                              widthMultiplier: 0.4,
+                              height: 50,
+                            ),
+                            const SizedBox(height: 10),
+                            buildTextButton(
+                              onPressed: () => print('Settings engaged'),
+                              text: 'Settings',
+                              widthMultiplier: 0.4,
+                              height: 50,
+                            ),
+                          ]
+                              .animate(
+                                delay: const Duration(milliseconds: 300),
+                                interval: const Duration(milliseconds: 250),
+                              )
+                              .slideX(curve: Curves.easeIn, begin: -.35
+                                  // duration: Duration(seconds: 1))
+                                  ),
+                          // .slideY(curve: Curves.easeIn)
+                          // .fadeIn(),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 10),
-                    buildTextButton(
-                      onPressed: () => print('Settings engaged'),
-                      text: 'Settings',
-                      widthMultiplier: 0.4,
-                      height: 50,
-                    ),
-                  ]
-                      .animate(
-                        delay: const Duration(milliseconds: 300),
-                        interval: const Duration(milliseconds: 250),
-                      )
-                      .slideX(
-                        curve: Curves.easeIn,
-                        // duration: Duration(seconds: 1))
-                      ),
-                  // .slideY(curve: Curves.easeIn)
-                  // .fadeIn(),
+                  ),
                 ),
-                const MyAudioPlayer(),
-              ],
+                const Positioned(
+                  right: 20,
+                  top: 20,
+                  child: MyAudioPlayer(),
+                )
+              ]),
             ),
-          ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 }
@@ -290,6 +324,7 @@ class _MyAudioPlayerState extends State<MyAudioPlayer> {
   void initState() {
     super.initState();
     player = AudioPlayer();
+    kIsWeb ? isMuted = true : isMuted = false;
     _loadMutedState();
   }
 
@@ -313,7 +348,7 @@ class _MyAudioPlayerState extends State<MyAudioPlayer> {
   _loadMutedState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      isMuted = prefs.getBool('isMuted') ?? false;
+      !kIsWeb ? isMuted = prefs.getBool('isMuted') ?? false : false;
       if (!isMuted) {
         player.setSource(
             AssetSource('music/rbgm.wav')); // Set audio source if not muted
@@ -328,11 +363,10 @@ class _MyAudioPlayerState extends State<MyAudioPlayer> {
       isMuted = !isMuted;
       prefs.setBool('isMuted', isMuted);
       if (isMuted) {
-        player.stop(); // Stop audio if muted
+        player.stop();
       } else {
-        player.setSource(
-            AssetSource('music/rbgm.wav')); // Set audio source if not muted
-        player.play(AssetSource('music/rbgm.wav')); // Play audio if not muted
+        player.setSource(AssetSource('music/rbgm.wav'));
+        player.play(AssetSource('music/rbgm.wav'));
       }
     });
   }
@@ -343,87 +377,32 @@ class _MyAudioPlayerState extends State<MyAudioPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return IconButton(
         icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
+        // iconSize: 5,
+        // iconSize: deviceHeight * 0.05,
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 21, 212, 241),
-            ),
+            // maximumSize: MaterialStateProperty.all(Size(100, 100)),
+            // minimumSize: MaterialStateProperty.all(Size(3, 3)),
+            backgroundColor: isMuted
+                ? MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 19, 90, 102))
+                : MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 30, 144, 164),
+                  ),
+            animationDuration: const Duration(milliseconds: 300),
             textStyle: MaterialStateProperty.all<TextStyle>(
               const TextStyle(
                 color: Colors.white,
               ),
             ),
             iconColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 254, 254, 254),
+              Color.fromARGB(255, 254, 254, 254),
             )),
         onPressed: () async {
           _toggleMute();
         });
   }
 }
-
-// class GamePage extends StatefulWidget {
-//   const GamePage({super.key, required this.title});
-
-//   final String title;
-
-//   @override
-//   State<GamePage> createState() => _GamePageState();
-// }
-
-// class _GamePageState extends State<GamePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Game Page"),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             buildHiScoreButton(1000),
-//             const SizedBox(height: 20),
-//             buildHiScoreButton(2000),
-//             const SizedBox(height: 20),
-//             buildHiScoreButton(3000),
-//             const SizedBox(height: 20),
-//             buildHiScoreButton(4000),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           // setState(() {
-//           //   _counter++;
-//           // });
-//         },
-//         tooltip: 'Increment',
-//         child: const Icon(Icons.add),
-//       ),
-//     );
-//   }
-
-//   TextButton buildHiScoreButton(
-//     // VoidCallback onPressed,
-//     int hiScore,
-//     // double widthMultiplier,
-//     // double height,
-//   ) {
-//     return TextButton(
-//       style: ButtonStyle(
-//         backgroundColor: MaterialStateProperty.all<Color>(
-//           const Color.fromARGB(255, 21, 212, 241),
-//         ),
-//         minimumSize: MaterialStateProperty.all<Size?>(
-//           const Size(100, 50),
-//         ),
-//       ),
-//       onPressed: () {
-//         print(hiScore);
-//       },
-//       child: Text(hiScore.toString()),
-//     );
-//   }
-// }
