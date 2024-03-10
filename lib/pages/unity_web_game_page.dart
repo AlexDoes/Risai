@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:reso/widget/loading.dart' as loading_screen;
 
 class UnityWebGamePage extends StatefulWidget {
   const UnityWebGamePage({Key? key}) : super(key: key);
@@ -8,22 +10,69 @@ class UnityWebGamePage extends StatefulWidget {
   State<UnityWebGamePage> createState() => _UnityWebGamePageState();
 }
 
+// class CustomSplashScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//       ),
+//       child: Center(
+//         child: Text(
+//           style: TextStyle(color: Colors.white, fontSize: 24.0),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class _UnityWebGamePageState extends State<UnityWebGamePage> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
   UnityWidgetController? _unityWidgetController;
 
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadingScreen();
+  }
+
+  Future<void> _loadingScreen() async {
+    await Future.delayed(const Duration(seconds: 5));
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      key: _scaffoldKey,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: SizedBox(
-                width: screenSize.height * 0.46220302375,
+        key: _scaffoldKey,
+        body: Stack(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 173, 251, 254),
+                          Color.fromARGB(255, 202, 247, 196),
+                          Color.fromARGB(255, 202, 247, 196)
+                        ],
+                      ),
+                    ),
+                  )),
+              Center(
+                  child: SizedBox(
+                // width: screenSize.height * 0.46220302375,
+                width: screenSize.height * .5125,
                 height: screenSize.height,
                 // bottom: false,
                 child: PopScope(
@@ -38,15 +87,30 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+              )),
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 173, 251, 254),
+                          Color.fromARGB(255, 202, 247, 196),
+                          Color.fromARGB(255, 202, 247, 196)
+                        ],
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+          isLoading
+              ? const loading_screen.CharactersStackAnimation()
+              : Container(),
+        ]));
   }
 
-  // Callback that connects the created controller to the unity controller
   void onUnityCreated(controller) {
     _unityWidgetController = controller;
   }
