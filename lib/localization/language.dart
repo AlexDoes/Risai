@@ -10,6 +10,13 @@ Map<String, Map<String, String>> languageLines = {
     'loadingScreen1': 'Collecting waste to recycle!',
     'loadingScreen2': 'Please help us reduce waste!',
     'loadingScreen3': 'Recycle when you can!',
+    'points': '+ points !',
+    'gameRules': 'How to play Resai:',
+    'gameRules1': '1 - Tap to drop waste into the bin',
+    'gameRules2': '2 - Combine similar items into recyclable items',
+    'gameRules3': '3 - Avoid overfilling!',
+    'gameRules4': '4 - Recycle as much as you can!',
+    'gameRules5': '5 - Earn points and have fun!'
   },
   'Japanese': {
     'init': 'こんにちは、世界',
@@ -22,5 +29,12 @@ Map<String, Map<String, String>> languageLines = {
     'loadingScreen1': 'リサイクルするためのごみを集めています！',
     'loadingScreen2': 'ごみを減らす手伝いをしてください！',
     'loadingScreen3': 'できるときにリサイクルしてください！',
+    'points': '+ ポイント !',
+    'gameRules': 'リサイの遊び方:',
+    'gameRules1': '1 - タップしてゴミをゴミ箱に入れます',
+    'gameRules2': '2 - 似たようなアイテムを組み合わせてリサイクル可能なアイテムにします',
+    'gameRules3': '3 - オーバーフィルを避けます！',
+    'gameRules4': '4 - できるだけ多くリサイクルしてください！',
+    'gameRules5': '5 - ポイントを獲得して楽しんでください！'
   },
 };

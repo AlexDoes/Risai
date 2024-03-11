@@ -80,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final waterbottle = Image.asset("assets/images/waterbottle.png");
   final sodacan = Image.asset("assets/images/sodacan.png");
   final newspaper = Image.asset("assets/images/newspaper.png");
+  final arrow = Image.asset("assets/images/arrow.png");
   late double maxWidth;
   late double maxHeight;
   String currentLanguage = 'English';
@@ -94,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<LanguageProvider>(context).language);
+    // print(Provider.of<LanguageProvider>(context).language);
 
     String lang = (Localizations.localeOf(context).toString());
 
