@@ -35,6 +35,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                     color: Colors.yellow,
                     child: UnityWidget(
                       onUnityCreated: onUnityCreated,
+                      onUnityMessage: onUnityMessage,
                     ),
                   ),
                 ),
@@ -49,5 +50,9 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
   // Callback that connects the created controller to the unity controller
   void onUnityCreated(controller) {
     _unityWidgetController = controller;
+  }
+
+ void onUnityMessage(message) {
+    print('Received message from unity: ${message.toString()}');
   }
 }
