@@ -5,6 +5,7 @@ import 'package:reso/localization/language.dart';
 import 'package:reso/providers/languageprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:reso/widget/textstack.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class GameRules extends StatelessWidget {
   const GameRules({Key? key}) : super(key: key);
@@ -27,8 +28,8 @@ class GameRules extends StatelessWidget {
     String currentLanguage = Provider.of<LanguageProvider>(context).language;
     return Stack(children: [
       Container(
-        height: screenSize.height * .75,
-        width: screenSize.width * .40,
+        height: kIsWeb ? screenSize.height * .75 : screenSize.height,
+        width: kIsWeb ? screenSize.width * .40 : screenSize.width,
         padding: const EdgeInsets.all(20.0),
         child: OpaqueBox(
           boxWidth: 0,

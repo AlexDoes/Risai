@@ -10,7 +10,7 @@ Map<String, Map<String, String>> languageLines = {
     'loadingScreen1': 'Collecting waste to recycle!',
     'loadingScreen2': 'Please help us reduce waste!',
     'loadingScreen3': 'Recycle when you can!',
-    'points': '+ points !',
+    'points': '+points !',
     'gameRules': 'How to play Resai:',
     'gameRules1': '1 - Tap to drop waste into the bin',
     'gameRules2': '2 - Combine similar items into recyclable items',
@@ -18,6 +18,8 @@ Map<String, Map<String, String>> languageLines = {
     'gameRules4': '4 - Recycle as much as you can!',
     'gameRules5': '5 - Earn points and have fun!',
     'legend': 'Combine two similar items to recycle them!',
+    'rulesButton': 'How to play',
+    'pointsbutton': 'Points',
   },
   'Japanese': {
     'init': 'こんにちは、世界',
@@ -30,7 +32,7 @@ Map<String, Map<String, String>> languageLines = {
     'loadingScreen1': 'リサイクルするためのごみを集めています！',
     'loadingScreen2': 'ごみを減らす手伝いをしてください！',
     'loadingScreen3': 'できるときにリサイクルしてください！',
-    'points': '+ ポイント !',
+    'points': '+ポイント !',
     'gameRules': 'リサイの遊び方:',
     'gameRules1': '1 - タップしてゴミをゴミ箱に入れます',
     'gameRules2': '2 - 似たようなアイテムを組み合わせてリサイクル可能なアイテムにします',
@@ -38,5 +40,7 @@ Map<String, Map<String, String>> languageLines = {
     'gameRules4': '4 - できるだけ多くリサイクルしてください！',
     'gameRules5': '5 - ポイントを獲得して楽しんでください！',
     'legend': '似た物を組み合わせる',
+    'rulesButton': '遊び方',
+    'pointsbutton': 'ポイント'
   },
 };

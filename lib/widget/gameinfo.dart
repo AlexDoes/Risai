@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:js' as js;
+// import 'dart:js' as js;
+// import 'dart:html' as html;
 import 'package:reso/widget/opaquebox.dart';
 import 'package:reso/localization/language.dart';
 import 'package:reso/providers/languageprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:reso/widget/textstack.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class GameInfo extends StatelessWidget {
   const GameInfo({Key? key}) : super(key: key);
@@ -26,8 +28,8 @@ class GameInfo extends StatelessWidget {
     String currentLanguage = Provider.of<LanguageProvider>(context).language;
     return Stack(children: [
       Container(
-        height: screenSize.height * .6,
-        width: screenSize.width,
+        height: kIsWeb ? screenSize.height * .6 : screenSize.height,
+        width: kIsWeb ? screenSize.width * .40 : screenSize.width,
         padding: const EdgeInsets.all(20.0),
         child: OpaqueBox(
           boxWidth: screenSize.width * .33,
@@ -66,9 +68,12 @@ class GameInfo extends StatelessWidget {
               onPressed: () => {
                     Provider.of<LanguageProvider>(context, listen: false)
                         .toggleLanguage(),
-                    js.context.callMethod('eval', [
-                      "document.title = `${languageLines[currentLanguage == "English" ? "Japanese" : "English"]!['title']!}`"
-                    ])
+                    // kIsWeb
+                    //     ? html.document.title = languageLines[
+                    //         currentLanguage == "English"
+                    //             ? "Japanese"
+                    //             : "English"]!['title']!
+                    //     : null
                   },
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),

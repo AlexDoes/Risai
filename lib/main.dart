@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 // ignore: unused_import, avoid_web_libraries_in_flutter
-import 'dart:js' as js;
+// import 'dart:html' as html;
+// import 'dart:js' as js;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -354,9 +355,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Provider.of<LanguageProvider>(context,
                                         listen: false)
                                     .toggleLanguage(),
-                                js.context.callMethod('eval', [
-                                  "document.title = `${languageLines[currentLanguage == "English" ? "Japanese" : "English"]!['title']!}`"
-                                ])
+                                // kIsWeb
+                                //     ? html.document.title = languageLines[
+                                //         currentLanguage == "English"
+                                //             ? "Japanese"
+                                //             : "English"]!['title']!
+                                //     : null
                               },
                               text:
                                   languageLines[currentLanguage]!['language']!,
