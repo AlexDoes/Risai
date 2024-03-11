@@ -1,25 +1,34 @@
 // ignore_for_file: avoid_print
 // ignore: unused_import
+import 'dart:js' as js;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:audioplayers/audioplayers.dart';
-// import 'package:reso/pages/game_page.dart';
 import 'package:reso/pages/unity_web_game_page.dart';
 import 'package:reso/pages/testpage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:reso/localization/language.dart';
 import 'package:reso/widget/musicplayer.dart';
+import 'package:provider/provider.dart';
+import 'package:reso/providers/languageprovider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    // precacheImage((bg), context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Risai',
@@ -47,15 +56,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title});
 
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  String title;
-  String language = 'en';
+  final String title;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -63,26 +71,40 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final background = Image.asset("assets/backgrounds/background.png");
   final mascot = Image.asset("assets/images/mascot.png");
+  final mascotShadow = Image.asset("assets/images/mascotshadow.png");
+  final coffeecup = Image.asset("assets/images/coffeecup.png");
+  final plasticbag = Image.asset("assets/images/plasticbag.png");
+  final toiletpaper = Image.asset("assets/images/toiletpaper.png");
+  final chips = Image.asset("assets/images/chips.png");
+  final milkcarton = Image.asset("assets/images/milkcarton.png");
+  final waterbottle = Image.asset("assets/images/waterbottle.png");
+  final sodacan = Image.asset("assets/images/sodacan.png");
+  final newspaper = Image.asset("assets/images/newspaper.png");
   late double maxWidth;
   late double maxHeight;
-
+  String currentLanguage = 'English';
   @override
   void didChangeDependencies() {
     precacheImage(background.image, context);
     super.didChangeDependencies();
   }
 
+  // @override
+  // void initState() {}
+
   @override
   Widget build(BuildContext context) {
+    print(Provider.of<LanguageProvider>(context).language);
+
     String lang = (Localizations.localeOf(context).toString());
-    if (lang.contains('ja')) {
-      lang = 'ja';
-    } else {
-      lang = 'en';
+
+    if (lang.contains('ja-JP') || lang.contains('ja')) {
+      Provider.of<LanguageProvider>(context, listen: false)
+          .setLanguage('Japanese');
     }
-    print(lang.contains('ja'));
-    print(lang.contains('en'));
-    // var fontSize = maxWidth * 0.1;
+
+    currentLanguage = Provider.of<LanguageProvider>(context).language;
+
     Size screenSize = MediaQuery.of(context).size;
     precacheImage(background.image, context);
     precacheImage(mascot.image, context);
@@ -244,9 +266,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           child: GestureDetector(
                             onTap: () => print('Reso'),
-                            child: const Text(
-                              'Risai',
-                              style: TextStyle(
+                            child: Text(
+                              languageLines[currentLanguage]!['title']!,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 // backgroundColor:
                                 // Color.fromARGB(255, 21, 212, 241),
@@ -263,7 +285,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 print('Let\'s play');
                                 Navigator.pushNamed(context, '/game');
                               },
-                              text: 'Play now',
+                              text: languageLines[currentLanguage]!['play']!,
                               widthMultiplier: 0.4,
                               height: 50,
                             )
@@ -290,17 +312,26 @@ class _MyHomePageState extends State<MyHomePage> {
                                     begin: 1.03, end: 1, duration: 2.seconds),
                             const SizedBox(height: 10),
                             buildTextButton(
-                              onPressed: () => print(widget.language),
-                              text: 'こんにちは、世界', // Hello world
+                              onPressed: () => print(
+                                {currentLanguage, 'hello'},
+                              ),
+                              text: languageLines[currentLanguage]![
+                                  'init']!, // Hello world
                               widthMultiplier: 0.4,
                               height: 50,
                             ),
                             const SizedBox(height: 10),
                             buildTextButton(
-                              onPressed: () => setState(() {
-                                widget.language = 'ja';
-                              }),
-                              text: 'Settings',
+                              onPressed: () => {
+                                Provider.of<LanguageProvider>(context,
+                                        listen: false)
+                                    .toggleLanguage(),
+                                js.context.callMethod('eval', [
+                                  "document.title = `${languageLines[currentLanguage == "English" ? "Japanese" : "English"]!['title']!}`"
+                                ])
+                              },
+                              text:
+                                  languageLines[currentLanguage]!['language']!,
                               widthMultiplier: 0.4,
                               height: 50,
                             ),

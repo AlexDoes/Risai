@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
+import 'package:reso/providers/languageprovider.dart';
+import 'package:reso/localization/language.dart';
 
 class CharactersStackAnimation extends StatelessWidget {
   const CharactersStackAnimation({super.key});
-
   @override
   Widget build(BuildContext context) {
+    String currentLanguage = Provider.of<LanguageProvider>(context).language;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -36,11 +39,11 @@ class CharactersStackAnimation extends StatelessWidget {
                 "assets/images/newspaper.png",
               ],
             ),
-            Text('Collecting waste to recycle!',
+            Text(languageLines[currentLanguage]!['loadingScreen1']!,
                 style: Theme.of(context).textTheme.headlineMedium),
-            Text('Please help us reduce waste!',
+            Text(languageLines[currentLanguage]!['loadingScreen2']!,
                 style: Theme.of(context).textTheme.headlineMedium),
-            Text('Recycle when you can!',
+            Text(languageLines[currentLanguage]!['loadingScreen3']!,
                 style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
@@ -93,7 +96,6 @@ class CharactersStack extends StatelessWidget {
                 ),
               );
             } else {
-              // Layer for other Characterss, placed behind the first one
               return Align(
                 alignment: Alignment.center,
                 child: Transform.translate(
@@ -144,15 +146,6 @@ class Characters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return CircleCharacters(
-    //   radius: radius.toDouble() + 2,
-    //   backgroundColor: Colors.white,
-    //   child: CircleCharacters(
-    //     radius: radius.toDouble(),
-    //     backgroundImage: AssetImage(imageUrl),
-    //     child: child,
-    //   ),
-    // );
     if (imageUrl == "assets/images/mascotshadow.png") {
       return Image(image: AssetImage(imageUrl), width: 500, height: 500);
     } else {

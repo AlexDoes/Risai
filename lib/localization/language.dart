@@ -1,16 +1,26 @@
 Map<String, Map<String, String>> languageLines = {
-  'eng': {
+  'English': {
+    'init': 'Hello World',
     'greeting': 'hello',
     'bye': 'bye',
     'title': 'Risai',
-    'play': 'play now',
-    'language': 'にほんご '
+    'play': 'Play Now !',
+    'language': 'にほんご',
+    'loading': 'Loading...',
+    'loadingScreen1': 'Collecting waste to recycle!',
+    'loadingScreen2': 'Please help us reduce waste!',
+    'loadingScreen3': 'Recycle when you can!',
   },
-  'jp': {
+  'Japanese': {
+    'init': 'こんにちは、世界',
     'greeting': 'こんにちは',
     'bye': 'じゃね',
     'title': 'リサイ',
-    'play': 'プレイ',
-    'language': 'English'
+    'play': 'プレイ !',
+    'language': 'English',
+    'loading': 'ローディング...',
+    'loadingScreen1': 'リサイクルするためのごみを集めています！',
+    'loadingScreen2': 'ごみを減らす手伝いをしてください！',
+    'loadingScreen3': 'できるときにリサイクルしてください！',
   },
 };
