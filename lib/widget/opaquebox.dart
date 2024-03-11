@@ -5,22 +5,24 @@ class OpaqueBox extends StatelessWidget {
   const OpaqueBox(
       {Key? key,
       required this.boxWidth,
-      required this.boxHeight,
-      required this.content})
+      required this.content,
+      required this.boxHeight})
       : super(key: key);
 
   final double boxWidth;
-  final double boxHeight;
   final Widget content; // double check this later
+  final double boxHeight;
 
   @override
   Widget build(BuildContext context) {
+    // final parentHeight = MediaQuery.of(context).size.height;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
       child: Container(
-        // width: boxWidth,
-        // height: boxHeight,
-        color: Color.fromARGB(98, 244, 184, 241),
+        // width: 400,
+        // height: 900,
+        color: Color.fromARGB(97, 240, 236, 239),
         child: Stack(
           children: [
             // Image.asset('assets/images/mascotcoral.png',
@@ -37,12 +39,12 @@ class OpaqueBox extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.white.withOpacity(0.10),
-                      Colors.white.withOpacity(0.05),
+                      Color.fromARGB(255, 255, 175, 1).withOpacity(0.10),
+                      Color.fromARGB(255, 2, 0, 0).withOpacity(0.05),
                     ]),
               ),
             ),
-            Center(child: content),
+            Container(child: content),
           ],
         ),
       ),

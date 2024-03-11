@@ -16,7 +16,8 @@ Map<String, Map<String, String>> languageLines = {
     'gameRules2': '2 - Combine similar items into recyclable items',
     'gameRules3': '3 - Avoid overfilling!',
     'gameRules4': '4 - Recycle as much as you can!',
-    'gameRules5': '5 - Earn points and have fun!'
+    'gameRules5': '5 - Earn points and have fun!',
+    'legend': 'Combine two similar items to recycle them!',
   },
   'Japanese': {
     'init': 'こんにちは、世界',
@@ -35,6 +36,7 @@ Map<String, Map<String, String>> languageLines = {
     'gameRules2': '2 - 似たようなアイテムを組み合わせてリサイクル可能なアイテムにします',
     'gameRules3': '3 - オーバーフィルを避けます！',
     'gameRules4': '4 - できるだけ多くリサイクルしてください！',
-    'gameRules5': '5 - ポイントを獲得して楽しんでください！'
+    'gameRules5': '5 - ポイントを獲得して楽しんでください！',
+    'legend': '似た物を組み合わせる',
   },
 };

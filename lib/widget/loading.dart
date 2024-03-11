@@ -78,14 +78,14 @@ class CharactersStack extends StatelessWidget {
                   offset: const Offset(0, 0),
                   child: Characters(imageUrl: characters[index])
                       .animate(
-                        delay: const Duration(milliseconds: 500),
-                      )
+                          // delay: const Duration(milliseconds: 500),
+                          )
                       .fadeIn(
                         delay: Duration(milliseconds: index * 800),
                       )
                       .slideY(
                         begin: -1,
-                        duration: const Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 800),
                         curve: Curves.easeOut,
                         delay: Duration(milliseconds: index * 800),
                       )

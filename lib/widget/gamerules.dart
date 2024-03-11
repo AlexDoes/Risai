@@ -4,6 +4,7 @@ import 'package:reso/widget/opaquebox.dart';
 import 'package:reso/localization/language.dart';
 import 'package:reso/providers/languageprovider.dart';
 import 'package:provider/provider.dart';
+import 'package:reso/widget/textstack.dart';
 
 class GameRules extends StatelessWidget {
   const GameRules({Key? key}) : super(key: key);
@@ -22,48 +23,42 @@ class GameRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    double imageSizing = screenSize.height <= 696 ? 75 : 100;
     String currentLanguage = Provider.of<LanguageProvider>(context).language;
     return Stack(children: [
       Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 173, 251, 254),
-              Color.fromARGB(255, 202, 247, 196),
-              Color.fromARGB(255, 202, 247, 196)
-            ],
-          ),
-        ),
-        height: screenSize.height,
-        width: screenSize.width,
+        height: screenSize.height * .75,
+        width: screenSize.width * .40,
         padding: const EdgeInsets.all(20.0),
         child: OpaqueBox(
-          boxWidth: screenSize.width,
-          boxHeight: 200,
+          boxWidth: 0,
+          boxHeight: 0,
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                languageLines[currentLanguage]!['gameRules']!,
-                style: const TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              textStack(
+                languageLines[currentLanguage]!['legend']!,
+                textSize: currentLanguage == 'English' ? 20 : 35,
               ),
               for (var i = 0; i < characters.length - 1; i += 2)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset(characters[i], height: 100),
-                    // Icon(arrow, size: 50),
+                    Image.asset(
+                      characters[i],
+                      height: imageSizing,
+                      width: imageSizing,
+                    ),
                     Image.asset(
                       'assets/images/arrow.png',
-                      height: 100,
+                      height: imageSizing,
                       width: 50,
                     ),
-                    Image.asset(characters[i + 1], height: 100)
+                    Image.asset(
+                      characters[i + 1],
+                      height: imageSizing,
+                      width: imageSizing,
+                    )
                   ],
                 ),
               Row(
@@ -76,21 +71,17 @@ class GameRules extends StatelessWidget {
                       height: 100,
                       width: 50,
                     ),
-                    Text(languageLines[currentLanguage]!['points']!,
-                        style: const TextStyle(fontSize: 25.0)),
+                    textStack(languageLines[currentLanguage]!['points']!),
                   ]),
             ],
           ),
         ),
       ),
       // Positioned(
-      //     bottom: 10,
-      //     right: 10,
+      //     top: 10,
+      //     left: 10,
       //     child: ElevatedButton(
-      //         onPressed: () => {
-      //               Provider.of<LanguageProvider>(context, listen: false)
-      //                   .toggleLanguage(),
-      //             },
+      //         onPressed: () => {Navigator.pop(context)},
       //         style: ElevatedButton.styleFrom(
       //           shape: const CircleBorder(),
       //           padding: const EdgeInsets.all(10),
@@ -102,11 +93,14 @@ class GameRules extends StatelessWidget {
       //           foregroundColor:
       //               currentLanguage != 'English' ? Colors.white : Colors.red,
       //         ),
-      //         child: Text(
-      //             style: const TextStyle(
-      //               fontSize: 10.0,
-      //             ),
-      //             currentLanguage == "English" ? "日本語" : "Eng"))),
+      //         child: IconButton(
+      //           icon: Icon(
+      //             Icons.arrow_back,
+      //             color:
+      //                 currentLanguage != 'English' ? Colors.white : Colors.red,
+      //           ),
+      //           onPressed: () => {Navigator.pop(context)},
+      //         )))
     ]);
   }
 }

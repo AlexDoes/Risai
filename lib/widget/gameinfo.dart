@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-//ignore: constant_identifier_names
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:js' as js;
 import 'package:reso/widget/opaquebox.dart';
 import 'package:reso/localization/language.dart';
 import 'package:reso/providers/languageprovider.dart';
 import 'package:provider/provider.dart';
+import 'package:reso/widget/textstack.dart';
 
 class GameInfo extends StatelessWidget {
   const GameInfo({Key? key}) : super(key: key);
   static const characters = [
-    // "assets/images/mascotshadow.png",
     "assets/images/plasticbag.png",
     "assets/images/chips.png",
     "assets/images/milkcarton.png",
@@ -25,50 +26,32 @@ class GameInfo extends StatelessWidget {
     String currentLanguage = Provider.of<LanguageProvider>(context).language;
     return Stack(children: [
       Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 173, 251, 254),
-              Color.fromARGB(255, 202, 247, 196),
-              Color.fromARGB(255, 202, 247, 196)
-            ],
-          ),
-        ),
-        height: screenSize.height,
+        height: screenSize.height * .6,
         width: screenSize.width,
         padding: const EdgeInsets.all(20.0),
         child: OpaqueBox(
           boxWidth: screenSize.width * .33,
-          boxHeight: screenSize.height * 0.8,
+          boxHeight: 200,
           content: Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  languageLines[currentLanguage]!['gameRules']!,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Stack(
+                  children: <Widget>[
+                    textStack(languageLines[currentLanguage]!['gameRules']!,
+                        textSize: 35, color: Colors.lightGreenAccent),
+                  ],
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 10),
                 for (var i = 1; i < 6; i++)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        languageLines[currentLanguage]!["gameRules${i}"]!,
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                        ),
-                      ),
-                      SizedBox(height: 10),
+                    children: [
+                      textStack(
+                          languageLines[currentLanguage]!['gameRules${i}']!),
+                      const SizedBox(height: 10),
                     ],
                   ),
               ],
@@ -83,6 +66,9 @@ class GameInfo extends StatelessWidget {
               onPressed: () => {
                     Provider.of<LanguageProvider>(context, listen: false)
                         .toggleLanguage(),
+                    js.context.callMethod('eval', [
+                      "document.title = `${languageLines[currentLanguage == "English" ? "Japanese" : "English"]!['title']!}`"
+                    ])
                   },
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),

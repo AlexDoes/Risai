@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-// ignore: unused_import
+// ignore: unused_import, avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/game': (context) => const UnityWebGamePage(),
         '/test': (context) => ThreeColumnsLayout(),
       },
-      home: MyHomePage(title: 'Risai'),
+      home: const MyHomePage(title: 'Risai'),
     );
   }
 }
@@ -176,6 +176,32 @@ class _MyHomePageState extends State<MyHomePage> {
             maxHeight = 500,
           );
 
+    Route createRoute() {
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const UnityWebGamePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, -1);
+          const end = Offset.zero;
+          const curve = Curves.easeOutCubic;
+
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          if (animation.status == AnimationStatus.reverse) {
+            return child;
+          }
+
+          return child; // no animation
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -207,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           maxWidth: maxWidth,
                           maxHeight: maxHeight,
                           minWidth: 400,
-                          minHeight: 700,
+                          minHeight: 696,
                         )
                       : null,
                   decoration: BoxDecoration(
@@ -284,7 +310,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             buildTextButton(
                               onPressed: () {
                                 print('Let\'s play');
-                                Navigator.pushNamed(context, '/game');
+                                // Navigator.pushNamed(context, '/game');
+                                Navigator.of(context).push(createRoute());
                               },
                               text: languageLines[currentLanguage]!['play']!,
                               widthMultiplier: 0.4,
