@@ -13,6 +13,7 @@ Widget textStack(String textContent,
             ..strokeWidth = 3
             ..color = strokeColor ?? const Color.fromARGB(255, 113, 177, 241),
         ),
+        softWrap: true,
       ),
       Text(
         textContent,
@@ -20,6 +21,7 @@ Widget textStack(String textContent,
           fontSize: textSize ?? 20,
           color: color ?? const Color.fromARGB(255, 255, 255, 252),
         ),
+        softWrap: true,
       ),
     ],
   );

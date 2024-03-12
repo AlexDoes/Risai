@@ -2,6 +2,7 @@
 // ignore: unused_import, avoid_web_libraries_in_flutter
 // import 'dart:html' as html;
 // import 'dart:js' as js;
+import 'package:reso/widget/about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -99,12 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // print(Provider.of<LanguageProvider>(context).language);
 
-    String lang = (Localizations.localeOf(context).toString());
+    // String lang = (Localizations.localeOf(context).toString());
 
-    if (lang.contains('ja-JP') || lang.contains('ja')) {
-      Provider.of<LanguageProvider>(context, listen: false)
-          .setLanguage('Japanese');
-    }
+    // if (lang.contains('ja-JP') || lang.contains('ja')) {
+    //   Provider.of<LanguageProvider>(context, listen: false)
+    //       .setLanguage('Japanese');
+    // }
 
     currentLanguage = Provider.of<LanguageProvider>(context).language;
 
@@ -281,15 +282,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               end: -.01),
                       const SizedBox(height: 10),
                       Container(
-                        // To provide both, use "decoration: BoxDecoration(color: color)".)
                         padding: const EdgeInsets.all(10),
                         alignment: Alignment.center,
                         width: screenSize.width * 0.6,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 73, 94, 97),
                           backgroundBlendMode: BlendMode.overlay,
-                          borderRadius: BorderRadius.circular(
-                              15), // Set the border radius here
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         child: GestureDetector(
                           onTap: () => print('Reso'),
@@ -340,10 +339,23 @@ class _MyHomePageState extends State<MyHomePage> {
                                   begin: 1.03, end: 1, duration: 2.seconds),
                           const SizedBox(height: 10),
                           buildTextButton(
-                            onPressed: () =>
-                                Navigator.pushNamed(context, '/test2'),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/test2');
+                              // {
+                              // showModalBottomSheet(
+                              //   context: context,
+                              //   isScrollControlled: true,
+                              //   builder: (BuildContext context) {
+                              //     return SizedBox(
+                              //       height: screenSize.height,
+                              //       width: screenSize.width,
+                              //       child: const AboutGame(),
+                              //     );
+                              //   },
+                              // );
+                            },
                             text: languageLines[currentLanguage]![
-                                'init']!, // Hello world
+                                'aboutButton']!, // Hello world
                             widthMultiplier: 0.4,
                             height: 50,
                           ),
@@ -377,7 +389,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Positioned(
                 right: 20,
-                top: 20,
+                top: kIsWeb ? 20 : 40,
                 child: MyAudioPlayer(),
               )
             ]),

@@ -11,6 +11,7 @@ import 'package:reso/providers/languageprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:reso/widget/textstack.dart';
 import 'package:reso/localization/language.dart';
+import 'package:reso/widget/gameover.dart' as gameover;
 
 class UnityWebGamePage extends StatefulWidget {
   const UnityWebGamePage({Key? key}) : super(key: key);
@@ -45,6 +46,9 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
     super.initState();
     _loadingScreen();
   }
+
+  bool showGameOver = false;
+  int recentScore = 0;
 
   Future<void> _loadingScreen() async {
     await Future.delayed(const Duration(seconds: 5));
@@ -106,26 +110,31 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                     ])),
                 Stack(children: [
                   Column(children: [
-                    Container(
-                      // width: screenSize.height * 0.46220302375,
-                      constraints: BoxConstraints(
-                        minWidth: kIsWeb ? 500 : screenSize.width,
-                        minHeight: kIsWeb ? 680 : screenSize.width,
+                    Stack(children: [
+                      // recentScore == 0
+                      //     ? gameover.GameOver(recentScore: recentScore)
+                      //     : Text('sadasds'),
+                      Container(
+                        constraints: BoxConstraints(
+                          minWidth: kIsWeb ? 500 : screenSize.width,
+                          minHeight: kIsWeb ? 680 : screenSize.height - 50,
+                        ),
+                        width: kIsWeb
+                            ? screenSize.height * .5125
+                            : screenSize.width,
+                        height:
+                            kIsWeb ? screenSize.height : screenSize.height - 50,
+                        child: FutureBuilder(
+                          future: Future.delayed(const Duration(seconds: 3)),
+                          builder: (context, snapshot) {
+                            return UnityWidget(
+                              onUnityCreated: onUnityCreated,
+                              onUnityMessage: onUnityMessage,
+                            );
+                          },
+                        ),
                       ),
-                      width:
-                          kIsWeb ? screenSize.height * .5125 : screenSize.width,
-                      height:
-                          kIsWeb ? screenSize.height : screenSize.height - 50,
-                      child: FutureBuilder(
-                        future: Future.delayed(const Duration(seconds: 3)),
-                        builder: (context, snapshot) {
-                          return UnityWidget(
-                            onUnityCreated: onUnityCreated,
-                            onUnityMessage: onUnityMessage,
-                          );
-                        },
-                      ),
-                    ),
+                    ]),
                     Visibility(
                       visible: !kIsWeb,
                       child: Row(
@@ -136,7 +145,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    Color.fromARGB(255, 181, 241, 228),
+                                    const Color.fromARGB(255, 181, 241, 228),
                               ),
                               onPressed: () {
                                 showModalBottomSheet(
@@ -165,7 +174,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    Color.fromARGB(255, 239, 213, 247),
+                                    const Color.fromARGB(255, 239, 213, 247),
                               ),
                               onPressed: () {
                                 showModalBottomSheet(
@@ -201,7 +210,8 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                                     // shape: const CircleBorder(),
                                     backgroundColor:
                                         currentLanguage != 'English'
-                                            ? Color.fromARGB(230, 15, 157, 188)
+                                            ? const Color.fromARGB(
+                                                230, 15, 157, 188)
                                             : Colors.white,
                                     foregroundColor:
                                         currentLanguage != 'English'
@@ -252,7 +262,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                             Color.fromARGB(255, 202, 247, 196)
                           ],
                         )),
-                        child: game_info.GameInfo())),
+                        child: const game_info.GameInfo())),
               ],
             )
                 .animate(delay: 0.seconds) // swap to 5
@@ -271,7 +281,34 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
   void onUnityMessage(message) {
     // I/flutter (15038): Received message from unity: GameOver
     // I/flutter (15038): Received message from unity: Score:10124
-    print('Received message from unity: ${message.toString()}');
+    if (message.toString() == 'GameOver') {
+      setState(() {
+        showGameOver = true;
+      });
+    }
+    // print('Received message from unity: $message');
+    if (message.toString().contains('Score:')) {
+      String scoreMessage = message.toString();
+      String score = scoreMessage.split(":").last.trim();
+      recentScore = int.parse(score);
+      showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 600,
+            width: MediaQuery.of(context).size.width,
+            child: gameover.GameOver(
+                recentScore: recentScore,
+                restartGame: () {
+                  triggerGameOver('RestartGame');
+                  Navigator.pop(context);
+                }),
+          );
+        },
+      );
+    }
   }
 
   void sendIntValueToUnity(String value) {

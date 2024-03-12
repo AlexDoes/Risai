@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:reso/providers/languageprovider.dart';
 import 'package:reso/localization/language.dart';
+import 'package:reso/widget/textstack.dart';
 
 class CharactersStackAnimation extends StatelessWidget {
   const CharactersStackAnimation({super.key});
@@ -39,12 +40,15 @@ class CharactersStackAnimation extends StatelessWidget {
                 "assets/images/newspaper.png",
               ],
             ),
-            Text(languageLines[currentLanguage]!['loadingScreen1']!,
-                style: Theme.of(context).textTheme.headlineMedium),
-            Text(languageLines[currentLanguage]!['loadingScreen2']!,
-                style: Theme.of(context).textTheme.headlineMedium),
-            Text(languageLines[currentLanguage]!['loadingScreen3']!,
-                style: Theme.of(context).textTheme.headlineMedium),
+            textStack(languageLines[currentLanguage]!['loadingScreen1']!,
+                // style: Theme.of(context).textTheme.headlineMedium),
+                textSize: 30),
+            textStack(languageLines[currentLanguage]!['loadingScreen2']!,
+                // style: Theme.of(context).textTheme.headlineMedium),
+                textSize: 30),
+            textStack(languageLines[currentLanguage]!['loadingScreen3']!,
+                // style: Theme.of(context).textTheme.headlineMedium),
+                textSize: 30),
           ],
         ),
       ),
