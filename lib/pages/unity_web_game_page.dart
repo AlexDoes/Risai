@@ -104,128 +104,125 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                         });
                       }),
                     ])),
-                SafeArea(
-                  child: Stack(children: [
-                    Column(children: [
-                      Container(
-                        // width: screenSize.height * 0.46220302375,
-                        constraints: BoxConstraints(
-                          minWidth: kIsWeb ? 500 : screenSize.width,
-                          minHeight: kIsWeb ? 680 : screenSize.width,
-                        ),
-                        width: kIsWeb
-                            ? screenSize.height * .5125
-                            : screenSize.width,
-                        height:
-                            kIsWeb ? screenSize.height : screenSize.height - 50,
-                        child: FutureBuilder(
-                          future: Future.delayed(const Duration(seconds: 3)),
-                          builder: (context, snapshot) {
-                            return UnityWidget(
-                              onUnityCreated: onUnityCreated,
-                            );
-                          },
-                        ),
+                Stack(children: [
+                  Column(children: [
+                    Container(
+                      // width: screenSize.height * 0.46220302375,
+                      constraints: BoxConstraints(
+                        minWidth: kIsWeb ? 500 : screenSize.width,
+                        minHeight: kIsWeb ? 680 : screenSize.width,
                       ),
-                      Visibility(
-                        visible: !kIsWeb,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Visibility(
-                              visible: !kIsWeb,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Color.fromARGB(255, 181, 241, 228),
-                                ),
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (BuildContext context) {
-                                      return SizedBox(
-                                        height: screenSize.height,
-                                        width: screenSize.width,
-                                        // padding: const EdgeInsets.all(20.0),
-                                        child: const game_rules.GameRules(),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: textStack(
-                                  currentLanguage == 'English'
-                                      ? 'Points'
-                                      : 'ポイント',
-                                  textSize: 20,
-                                ),
+                      width:
+                          kIsWeb ? screenSize.height * .5125 : screenSize.width,
+                      height:
+                          kIsWeb ? screenSize.height : screenSize.height - 50,
+                      child: FutureBuilder(
+                        future: Future.delayed(const Duration(seconds: 3)),
+                        builder: (context, snapshot) {
+                          return UnityWidget(
+                            onUnityCreated: onUnityCreated,
+                          );
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: !kIsWeb,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Visibility(
+                            visible: !kIsWeb,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromARGB(255, 181, 241, 228),
+                              ),
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (BuildContext context) {
+                                    return SizedBox(
+                                      height: screenSize.height,
+                                      width: screenSize.width,
+                                      // padding: const EdgeInsets.all(20.0),
+                                      child: const game_rules.GameRules(),
+                                    );
+                                  },
+                                );
+                              },
+                              child: textStack(
+                                currentLanguage == 'English'
+                                    ? 'Points'
+                                    : 'ポイント',
+                                textSize: 20,
                               ),
                             ),
-                            Visibility(
-                              visible: !kIsWeb,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Color.fromARGB(255, 239, 213, 247),
-                                ),
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (BuildContext context) {
-                                      return SizedBox(
-                                        height: screenSize.height,
-                                        width: screenSize.width,
-                                        // padding: const EdgeInsets.all(20.0),
-                                        child: const game_info.GameInfo(),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: textStack(
-                                  currentLanguage == 'English'
-                                      ? 'How to play'
-                                      : '遊び方',
-                                  textSize: 20,
-                                ),
+                          ),
+                          Visibility(
+                            visible: !kIsWeb,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromARGB(255, 239, 213, 247),
+                              ),
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (BuildContext context) {
+                                    return SizedBox(
+                                      height: screenSize.height,
+                                      width: screenSize.width,
+                                      // padding: const EdgeInsets.all(20.0),
+                                      child: const game_info.GameInfo(),
+                                    );
+                                  },
+                                );
+                              },
+                              child: textStack(
+                                currentLanguage == 'English'
+                                    ? 'How to play'
+                                    : '遊び方',
+                                textSize: 20,
                               ),
                             ),
-                            Visibility(
-                                visible: !kIsWeb,
-                                child: ElevatedButton(
-                                    onPressed: () => {
-                                          Provider.of<LanguageProvider>(context,
-                                                  listen: false)
-                                              .toggleLanguage(),
-                                        },
-                                    style: ElevatedButton.styleFrom(
-                                      // shape: const CircleBorder(),
-                                      backgroundColor: currentLanguage !=
-                                              'English'
-                                          ? Color.fromARGB(230, 15, 157, 188)
-                                          : Colors.white,
-                                      foregroundColor:
-                                          currentLanguage != 'English'
-                                              ? Colors.white
-                                              : Colors.red,
-                                    ),
-                                    child: Text(
-                                        style: const TextStyle(
-                                          fontSize: 10.0,
-                                        ),
-                                        currentLanguage == "English"
-                                            ? "日本語"
-                                            : "Eng"))),
-                          ],
-                        ),
+                          ),
+                          Visibility(
+                              visible: !kIsWeb,
+                              child: ElevatedButton(
+                                  onPressed: () => {
+                                        Provider.of<LanguageProvider>(context,
+                                                listen: false)
+                                            .toggleLanguage(),
+                                      },
+                                  style: ElevatedButton.styleFrom(
+                                    // shape: const CircleBorder(),
+                                    backgroundColor:
+                                        currentLanguage != 'English'
+                                            ? Color.fromARGB(230, 15, 157, 188)
+                                            : Colors.white,
+                                    foregroundColor:
+                                        currentLanguage != 'English'
+                                            ? Colors.white
+                                            : Colors.red,
+                                  ),
+                                  child: Text(
+                                      style: const TextStyle(
+                                        fontSize: 10.0,
+                                      ),
+                                      currentLanguage == "English"
+                                          ? "日本語"
+                                          : "Eng"))),
+                        ],
                       ),
-                    ]),
-                    // Visibility(
-                    //   visible: !kIsWeb,
-                    //   child: back_button.backButton(context),
-                    // )
+                    ),
                   ]),
-                ),
+                  // Visibility(
+                  //   visible: !kIsWeb,
+                  //   child: back_button.backButton(context),
+                  // )
+                ]),
                 Expanded(
                     flex: 1,
                     // child: Container(

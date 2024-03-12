@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:reso/pages/unity_web_game_page.dart';
-import 'package:reso/pages/testpage.dart';
+import 'package:reso/pages/testpage2.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:reso/localization/language.dart';
@@ -49,7 +49,8 @@ class MyApp extends StatelessWidget {
         //   '/': (context) => const MyHomePage(title: 'Reso'),
         // '/game': (context) => const GamePage(),
         '/game': (context) => const UnityWebGamePage(),
-        '/test': (context) => ThreeColumnsLayout(),
+        // '/test': (context) => ThreeColumnsLayout(),
+        '/test2': (context) => Testpage2(),
       },
       home: const MyHomePage(title: 'Risai'),
     );
@@ -204,204 +205,199 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 173, 251, 254),
-                        Color.fromARGB(255, 202, 247, 196),
-                        Color.fromARGB(255, 202, 247, 196),
-                      ],
-                    ),
-                  ),
-                )),
-            Center(
-              // heightFactor: 1,
-              child: Stack(children: [
-                Container(
-                  height: screenSize.height,
-                  width: screenSize.width < 400 ? 400 : screenSize.width,
-                  constraints: kIsWeb
-                      ? BoxConstraints(
-                          maxWidth: maxWidth,
-                          maxHeight: maxHeight,
-                          minWidth: 400,
-                          minHeight: 696,
-                        )
-                      : null,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: background.image,
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
-                      BlendMode.darken,
-                    ),
-                  )),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: screenSize.width * 0.75,
-                          height: screenSize.height * 0.5,
-                          constraints: BoxConstraints(
-                            maxHeight: maxHeight,
-                            maxWidth: maxWidth,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child:
-                                Image(image: mascot.image, fit: BoxFit.cover),
-                          ),
-                        )
-                            .animate(
-                              delay: const Duration(milliseconds: 300),
-                              onPlay: (controller) => controller.loop(
-                                reverse: true,
-                                count: 12,
-                              ),
-                            )
-                            .slideX(
-                                curve: Curves.easeIn,
-                                duration: 1200.ms,
-                                begin: 0,
-                                end: .005)
-                            .slideY(
-                                curve: Curves.easeIn,
-                                duration: 1200.ms,
-                                begin: 0,
-                                end: -.01),
-                        const SizedBox(height: 10),
-                        Container(
-                          // To provide both, use "decoration: BoxDecoration(color: color)".)
-                          padding: const EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          width: screenSize.width * 0.6,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 73, 94, 97),
-                            backgroundBlendMode: BlendMode.overlay,
-                            borderRadius: BorderRadius.circular(
-                                15), // Set the border radius here
-                          ),
-                          child: GestureDetector(
-                            onTap: () => print('Reso'),
-                            child: Text(
-                              languageLines[currentLanguage]!['title']!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                // backgroundColor:
-                                // Color.fromARGB(255, 21, 212, 241),
-                                fontSize: 35,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          children: [
-                            buildTextButton(
-                              onPressed: () {
-                                print('Let\'s play');
-                                // Navigator.pushNamed(context, '/game');
-                                Navigator.of(context).push(createRoute());
-                              },
-                              text: languageLines[currentLanguage]!['play']!,
-                              widthMultiplier: 0.4,
-                              height: 50,
-                            )
-                                .animate(
-                                  delay: 1.seconds,
-                                  onPlay: (controller) => controller.loop(
-                                    count: 6,
-                                  ),
-                                )
-                                .shimmer(
-                                  duration: 2000.ms,
-                                  size: .5,
-                                  // color: Color.fromARGB(90, 50, 50, 4),
-                                  // color: Colors.purple,
-                                  // size: 0.1
-                                )
-                                .animate(
-                                  onPlay: (controller) => controller.loop(
-                                    reverse: true,
-                                    count: 11,
-                                  ),
-                                )
-                                .scaleXY(
-                                    begin: 1.03, end: 1, duration: 2.seconds),
-                            const SizedBox(height: 10),
-                            buildTextButton(
-                              onPressed: () => print(
-                                {currentLanguage, 'hello'},
-                              ),
-                              text: languageLines[currentLanguage]![
-                                  'init']!, // Hello world
-                              widthMultiplier: 0.4,
-                              height: 50,
-                            ),
-                            const SizedBox(height: 10),
-                            buildTextButton(
-                              onPressed: () => {
-                                Provider.of<LanguageProvider>(context,
-                                        listen: false)
-                                    .toggleLanguage(),
-                                // kIsWeb
-                                //     ? html.document.title = languageLines[
-                                //         currentLanguage == "English"
-                                //             ? "Japanese"
-                                //             : "English"]!['title']!
-                                //     : null
-                              },
-                              text:
-                                  languageLines[currentLanguage]!['language']!,
-                              widthMultiplier: 0.4,
-                              height: 50,
-                            ),
-                          ]
-                              .animate(
-                                delay: const Duration(milliseconds: 300),
-                                interval: const Duration(milliseconds: 250),
-                              )
-                              .slideX(curve: Curves.easeIn, begin: -.35),
-                        ),
-                      ],
-                    ),
+      body: Row(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+              flex: 1,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 173, 251, 254),
+                      Color.fromARGB(255, 202, 247, 196),
+                      Color.fromARGB(255, 202, 247, 196),
+                    ],
                   ),
                 ),
-                const Positioned(
-                  right: 20,
-                  top: 20,
-                  child: MyAudioPlayer(),
-                )
-              ]),
-            ),
-            Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 173, 251, 254),
-                        Color.fromARGB(255, 202, 247, 196),
-                        Color.fromARGB(255, 202, 247, 196),
-                      ],
-                    ),
+              )),
+          Center(
+            // heightFactor: 1,
+            child: Stack(children: [
+              Container(
+                height: screenSize.height,
+                width: screenSize.width < 400 ? 400 : screenSize.width,
+                constraints: kIsWeb
+                    ? BoxConstraints(
+                        maxWidth: maxWidth,
+                        maxHeight: maxHeight,
+                        minWidth: 400,
+                        minHeight: 696,
+                      )
+                    : null,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: background.image,
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    const Color.fromARGB(255, 10, 241, 214).withOpacity(0.8),
+                    BlendMode.darken,
                   ),
                 )),
-          ],
-        ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: screenSize.width * 0.75,
+                        height: screenSize.height * 0.5,
+                        constraints: BoxConstraints(
+                          maxHeight: maxHeight,
+                          maxWidth: maxWidth,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image(image: mascot.image, fit: BoxFit.cover),
+                        ),
+                      )
+                          .animate(
+                            delay: const Duration(milliseconds: 300),
+                            onPlay: (controller) => controller.loop(
+                              reverse: true,
+                              count: 12,
+                            ),
+                          )
+                          .slideX(
+                              curve: Curves.easeIn,
+                              duration: 1200.ms,
+                              begin: 0,
+                              end: .005)
+                          .slideY(
+                              curve: Curves.easeIn,
+                              duration: 1200.ms,
+                              begin: 0,
+                              end: -.01),
+                      const SizedBox(height: 10),
+                      Container(
+                        // To provide both, use "decoration: BoxDecoration(color: color)".)
+                        padding: const EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        width: screenSize.width * 0.6,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 73, 94, 97),
+                          backgroundBlendMode: BlendMode.overlay,
+                          borderRadius: BorderRadius.circular(
+                              15), // Set the border radius here
+                        ),
+                        child: GestureDetector(
+                          onTap: () => print('Reso'),
+                          child: Text(
+                            languageLines[currentLanguage]!['title']!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              // backgroundColor:
+                              // Color.fromARGB(255, 21, 212, 241),
+                              fontSize: 35,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Column(
+                        children: [
+                          buildTextButton(
+                            onPressed: () {
+                              print('Let\'s play');
+                              // Navigator.pushNamed(context, '/game');
+                              Navigator.of(context).push(createRoute());
+                            },
+                            text: languageLines[currentLanguage]!['play']!,
+                            widthMultiplier: 0.4,
+                            height: 50,
+                          )
+                              .animate(
+                                delay: 1.seconds,
+                                onPlay: (controller) => controller.loop(
+                                  count: 6,
+                                ),
+                              )
+                              .shimmer(
+                                duration: 2000.ms,
+                                size: .5,
+                                // color: Color.fromARGB(90, 50, 50, 4),
+                                // color: Colors.purple,
+                                // size: 0.1
+                              )
+                              .animate(
+                                onPlay: (controller) => controller.loop(
+                                  reverse: true,
+                                  count: 11,
+                                ),
+                              )
+                              .scaleXY(
+                                  begin: 1.03, end: 1, duration: 2.seconds),
+                          const SizedBox(height: 10),
+                          buildTextButton(
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/test2'),
+                            text: languageLines[currentLanguage]![
+                                'init']!, // Hello world
+                            widthMultiplier: 0.4,
+                            height: 50,
+                          ),
+                          const SizedBox(height: 10),
+                          buildTextButton(
+                            onPressed: () => {
+                              Provider.of<LanguageProvider>(context,
+                                      listen: false)
+                                  .toggleLanguage(),
+                              // kIsWeb
+                              //     ? html.document.title = languageLines[
+                              //         currentLanguage == "English"
+                              //             ? "Japanese"
+                              //             : "English"]!['title']!
+                              //     : null
+                            },
+                            text: languageLines[currentLanguage]!['language']!,
+                            widthMultiplier: 0.4,
+                            height: 50,
+                          ),
+                        ]
+                            .animate(
+                              delay: const Duration(milliseconds: 300),
+                              interval: const Duration(milliseconds: 250),
+                            )
+                            .slideX(curve: Curves.easeIn, begin: -.35),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Positioned(
+                right: 20,
+                top: 20,
+                child: MyAudioPlayer(),
+              )
+            ]),
+          ),
+          Expanded(
+              flex: 1,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 173, 251, 254),
+                      Color.fromARGB(255, 202, 247, 196),
+                      Color.fromARGB(255, 202, 247, 196),
+                    ],
+                  ),
+                ),
+              )),
+        ],
       ),
     );
   }

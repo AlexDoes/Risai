@@ -35,12 +35,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   audioplayers: ^5.2.1
-  flutter_svg: ^2.0.9
+  flutter_svg: ^1.1.6
   logging: ^1.0.2
   shared_preferences: ^2.0.6
   flutter_animate: ^4.5.0
   flutter_unity_widget: ^2022.2.0
   auto_size_text: ^3.0.0
+  add_to_google_wallet: ^0.0.3
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_native_splash: ^2.2.0+1
@@ -62,8 +64,9 @@ dev_dependencies:
 # flutter pub run flutter_native_splash:create
 # flutter pub run flutter_launcher_icons
 flutter_native_splash:
-  color: "A7C2CC"
+  color: "#A7C2CC"
   image: "assets/images/mascotshadow.png"
+
   android: true
   ios: true
   web: true

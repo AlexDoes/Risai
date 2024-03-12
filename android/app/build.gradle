@@ -68,4 +68,6 @@ flutter {
 
 dependencies {
     implementation project(':unityLibrary')
+    implementation "com.google.android.gms:play-services-pay:16.4.0"
+    
 }
