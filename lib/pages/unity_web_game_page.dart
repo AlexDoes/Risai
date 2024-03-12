@@ -51,7 +51,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
   int recentScore = 0;
 
   Future<void> _loadingScreen() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 6));
     setState(() {
       isLoading = false;
     });
