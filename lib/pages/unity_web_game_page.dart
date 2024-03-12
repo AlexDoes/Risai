@@ -113,7 +113,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                         minHeight: kIsWeb ? 680 : screenSize.width,
                       ),
                       width:
-                          kIsWeb ? screenSize.height * .5125 : screenSize.width,
+                          kIsWeb ? screenSize.height * .9 : screenSize.width,
                       height:
                           kIsWeb ? screenSize.height : screenSize.height - 50,
                       child: FutureBuilder(
