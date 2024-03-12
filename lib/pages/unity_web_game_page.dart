@@ -121,6 +121,7 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                         builder: (context, snapshot) {
                           return UnityWidget(
                             onUnityCreated: onUnityCreated,
+                            onUnityMessage: onUnityMessage,
                           );
                         },
                       ),
@@ -265,5 +266,29 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
 
   void onUnityCreated(controller) {
     _unityWidgetController = controller;
+  }
+
+  void onUnityMessage(message) {
+    // I/flutter (15038): Received message from unity: GameOver
+    // I/flutter (15038): Received message from unity: Score:10124
+    print('Received message from unity: ${message.toString()}');
+  }
+
+  void sendIntValueToUnity(String value) {
+    // print(value);
+    _unityWidgetController?.postMessage(
+      'Game Manager',
+      'GetLanguageState',
+      value,
+    );
+  }
+
+  void triggerGameOver(String value) {
+    // print(value);
+    _unityWidgetController?.postMessage(
+      'UI Manager',
+      'RestartGame',
+      value,
+    );
   }
 }
