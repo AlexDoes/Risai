@@ -198,6 +198,16 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                               ),
                             ),
                           ),
+                          ElevatedButton(
+                              onPressed: () => {triggerGameOver('RestartGame')},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromARGB(255, 255, 193, 193),
+                              ),
+                              child: Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              )),
                           Visibility(
                               visible: !kIsWeb,
                               child: ElevatedButton(

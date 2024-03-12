@@ -30,21 +30,20 @@ class GameRules extends StatelessWidget {
       Container(
         height: kIsWeb ? screenSize.height * .75 : screenSize.height,
         width: kIsWeb ? screenSize.width * .40 : screenSize.width,
-        padding: kIsWeb ? EdgeInsets.all(20.0) : EdgeInsets.all(10),
+        padding: kIsWeb ? const EdgeInsets.all(20.0) : const EdgeInsets.all(10),
         child: OpaqueBox(
           boxWidth: 0,
           boxHeight: 0,
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              textStack(
-                languageLines[currentLanguage]!['legend']!,
-                textSize: currentLanguage == 'English'
-                    ? kIsWeb
-                        ? 25
-                        : 40
-                    : 35,
-              ),
+              textStack(languageLines[currentLanguage]!['legend']!,
+                  textSize: currentLanguage == 'English'
+                      ? kIsWeb
+                          ? 25
+                          : 35
+                      : 35,
+                  align: true),
               for (var i = 0; i < characters.length - 1; i += 2)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -53,7 +53,7 @@ class GameInfo extends StatelessWidget {
                     children: [
                       textStack(
                           languageLines[currentLanguage]!['gameRules${i}']!),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
                     ],
                   ),
               ],

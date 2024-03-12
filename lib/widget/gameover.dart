@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:reso/localization/language.dart';
 import 'package:reso/providers/languageprovider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class GameOver extends StatelessWidget {
   final int recentScore;
@@ -46,7 +47,17 @@ class GameOver extends StatelessWidget {
                         "${languageLines[currentLanguage]!['score']!}: $recentScore",
                         textSize: 35,
                         color: const Color.fromARGB(255, 181, 252, 181),
-                      ),
+                      )
+                          .animate(
+                            delay: 1.seconds,
+                            onPlay: (controller) => controller.loop(
+                              count: 6,
+                            ),
+                          )
+                          .shimmer(
+                            duration: 3000.ms,
+                            size: .5,
+                          ),
                       const SizedBox(height: 10),
                       textStack(
                           recentScore < 1000
@@ -58,6 +69,7 @@ class GameOver extends StatelessWidget {
                         visible: recentScore > 1000,
                         child: textStack(
                             languageLines[currentLanguage]!['youWon']!,
+                            color: Color.fromARGB(255, 251, 230, 251),
                             textSize: 30),
                       ),
                       const SizedBox(height: 20),
@@ -81,31 +93,44 @@ class GameOver extends StatelessWidget {
                                 ),
                               )
                             : AddToGoogleWalletButton(
-                                pass: generatePass(
-                                    recentScore: recentScore.toString(),
-                                    passLanguage: currentLanguage == 'Japanese'
-                                        ? 'ja'
-                                        : 'en'),
-                                // onSuccess: () => ScaffoldMessenger.of(context)
-                                //     .showSnackBar(
-                                //         const SnackBar(content: Text('Success!'))),
-                                // onCanceled: () => ScaffoldMessenger.of(context)
-                                //     .showSnackBar(const SnackBar(
-                                //         content: Text('Action canceled.'))),
-                                onError: (Object error) =>
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(error.toString()))),
-                                locale: currentLanguage == 'English'
-                                    ? const Locale('en', 'US')
-                                    : const Locale('jp', 'JP')),
+                                    pass: generatePass(
+                                        recentScore: recentScore.toString(),
+                                        passLanguage:
+                                            currentLanguage == 'Japanese'
+                                                ? 'ja'
+                                                : 'en'),
+                                    // onSuccess: () => ScaffoldMessenger.of(context)
+                                    //     .showSnackBar(
+                                    //         const SnackBar(content: Text('Success!'))),
+                                    // onCanceled: () => ScaffoldMessenger.of(context)
+                                    //     .showSnackBar(const SnackBar(
+                                    //         content: Text('Action canceled.'))),
+                                    onError: (Object error) =>
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content:
+                                                    Text(error.toString()))),
+                                    locale: currentLanguage == 'English'
+                                        ? const Locale('en', 'US')
+                                        : const Locale('jp', 'JP'))
+                                .animate(
+                                  delay: 1.seconds,
+                                  onPlay: (controller) => controller.loop(
+                                    count: 3,
+                                  ),
+                                )
+                                .shimmer(
+                                  duration: 2400.ms,
+                                  size: .5,
+                                ),
                       ),
                       Visibility(
                         visible: recentScore <= 1000,
                         child: Center(
                           child: textStack(
                               languageLines[currentLanguage]!['scoreHigher']!,
-                              textSize: 30),
+                              textSize: 30,
+                              align: true),
                         ),
                       ),
                       const SizedBox(height: 25),

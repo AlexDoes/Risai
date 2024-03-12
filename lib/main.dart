@@ -2,8 +2,9 @@
 // ignore: unused_import, avoid_web_libraries_in_flutter
 // import 'dart:html' as html;
 // import 'dart:js' as js;
+
 import 'package:reso/widget/about.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:reso/widget/textstack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:reso/pages/unity_web_game_page.dart';
@@ -292,14 +293,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: GestureDetector(
                           onTap: () => print('Reso'),
-                          child: Text(
+                          child: textStack(
                             languageLines[currentLanguage]!['title']!,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              // backgroundColor:
-                              // Color.fromARGB(255, 21, 212, 241),
-                              fontSize: 35,
-                            ),
+                            textSize: 40,
+                            color: const Color.fromARGB(255, 250, 250, 250),
+                            strokeColor: const Color.fromARGB(255, 52, 136, 0),
                           ),
                         ),
                       ),

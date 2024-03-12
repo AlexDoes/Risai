@@ -77,14 +77,14 @@ class AboutGame extends StatelessWidget {
                           color: const Color.fromARGB(255, 244, 255, 93)),
                     ),
                     const SizedBox(height: 25),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: textStack(
-                          languageLines[currentLanguage]!['aboutRisai7']!,
-                          textSize: currentLanguage == 'English' ? 20 : 20,
-                          color: const Color.fromARGB(255, 244, 255, 93)),
-                    ),
-                    const SizedBox(height: 10),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: textStack(
+                    //       languageLines[currentLanguage]!['aboutRisai7']!,
+                    //       textSize: currentLanguage == 'English' ? 20 : 20,
+                    //       color: const Color.fromARGB(255, 244, 255, 93)),
+                    // ),
+                    // const SizedBox(height: 10),
                     Image(
                       image: AssetImage('assets/images/mascotshadow.png'),
                       fit: BoxFit.cover,
