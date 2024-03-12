@@ -116,12 +116,11 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                       //     : Text('sadasds'),
                       Container(
                         constraints: BoxConstraints(
-                          minWidth: kIsWeb ? 500 : screenSize.width,
-                          minHeight: kIsWeb ? 680 : screenSize.height - 50,
+                          minWidth: kIsWeb ? 735 : screenSize.width,
+                          minHeight: kIsWeb ? 790 : screenSize.height - 50,
                         ),
-                        width: kIsWeb
-                            ? screenSize.height * .5125
-                            : screenSize.width,
+                        width:
+                            kIsWeb ? screenSize.height * .75 : screenSize.width,
                         height:
                             kIsWeb ? screenSize.height : screenSize.height - 50,
                         child: FutureBuilder(
@@ -259,20 +258,41 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                     //     ),
                     //   ),
                     // )),
-                    child: Container(
-                        height: screenSize.height,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color.fromARGB(255, 173, 251, 254),
-                            Color.fromARGB(255, 202, 247, 196),
-                            Color.fromARGB(255, 202, 247, 196)
-                          ],
-                        )),
-                        child: const game_info.GameInfo())),
+                    child: Stack(
+                      children: [
+                        Container(
+                            height: screenSize.height,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color.fromARGB(255, 173, 251, 254),
+                                Color.fromARGB(255, 202, 247, 196),
+                                Color.fromARGB(255, 202, 247, 196)
+                              ],
+                            )),
+                            child: const game_info.GameInfo()),
+                        Visibility(
+                          visible: kIsWeb,
+                          child: Positioned(
+                            bottom: 10,
+                            child: ElevatedButton(
+                                onPressed: () =>
+                                    {triggerGameOver('RestartGame')},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 193, 193),
+                                ),
+                                child: Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                )),
+                          ),
+                        ),
+                      ],
+                    )),
               ],
             )
                 .animate(delay: 0.seconds) // swap to 5
@@ -306,16 +326,25 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return SizedBox(
-            height: 600,
-            width: MediaQuery.of(context).size.width,
-            child: gameover.GameOver(
-                recentScore: recentScore,
-                restartGame: () {
-                  triggerGameOver('RestartGame');
-                  Navigator.pop(context);
-                }),
-          );
+          return !kIsWeb
+              ? SizedBox(
+                  height: 600,
+                  width: MediaQuery.of(context).size.width,
+                  child: gameover.GameOver(
+                      boxwidth: MediaQuery.of(context).size.width,
+                      recentScore: recentScore,
+                      restartGame: () {
+                        triggerGameOver('RestartGame');
+                        Navigator.pop(context);
+                      }),
+                )
+              : gameover.GameOver(
+                  boxwidth: MediaQuery.of(context).size.width,
+                  recentScore: recentScore,
+                  restartGame: () {
+                    triggerGameOver('RestartGame');
+                    Navigator.pop(context);
+                  });
         },
       );
     }

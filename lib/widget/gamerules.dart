@@ -24,7 +24,7 @@ class GameRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    double imageSizing = screenSize.height <= 696 ? 75 : 100;
+    double imageSizing = screenSize.height <= 696 ? 75 : 80;
     String currentLanguage = Provider.of<LanguageProvider>(context).language;
     return Stack(children: [
       Container(
@@ -68,7 +68,8 @@ class GameRules extends StatelessWidget {
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset(characters[7], height: 100),
+                    Image.asset(characters[7],
+                        height: imageSizing, width: imageSizing),
                     // Icon(arrow, size: 50),
                     Image.asset(
                       'assets/images/arrow.png',
