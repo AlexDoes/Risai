@@ -340,19 +340,18 @@ class _MyHomePageState extends State<MyHomePage> {
                           const SizedBox(height: 10),
                           buildTextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/test2');
-                              // {
-                              // showModalBottomSheet(
-                              //   context: context,
-                              //   isScrollControlled: true,
-                              //   builder: (BuildContext context) {
-                              //     return SizedBox(
-                              //       height: screenSize.height,
-                              //       width: screenSize.width,
-                              //       child: const AboutGame(),
-                              //     );
-                              //   },
-                              // );
+                              // Navigator.pushNamed(context, '/test2');
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: screenSize.height,
+                                    width: screenSize.width,
+                                    child: const AboutGame(),
+                                  );
+                                },
+                              );
                             },
                             text: languageLines[currentLanguage]![
                                 'aboutButton']!, // Hello world
