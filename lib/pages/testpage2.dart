@@ -4,6 +4,7 @@ import 'package:reso/widget/pass.dart';
 import 'package:reso/localization/language.dart';
 import 'package:provider/provider.dart';
 import 'package:reso/providers/languageprovider.dart';
+import 'dart:math';
 
 class Testpage2 extends StatelessWidget {
   void _showSnackBar(BuildContext context, String text) =>
@@ -17,7 +18,7 @@ class Testpage2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AddToGoogleWalletButton(
-              pass: examplePass,
+              pass: generatePass(password: '030395'),
               onSuccess: () => _showSnackBar(context, 'Success!'),
               onCanceled: () => _showSnackBar(context, 'Action canceled.'),
               onError: (Object error) =>
