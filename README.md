@@ -9,7 +9,7 @@ This repository contains a Flutter app integrated with a Unity game. Follow the 
 - Flutter SDK
 - Java Development Kit (JDK)
 - Android SDK and NDK
-- .NET SDK (version 8.0.201 or later)
+- .NET SDK
 
 ## Installation
 
