@@ -43,7 +43,7 @@ class GameInfo extends StatelessWidget {
                 Stack(
                   children: <Widget>[
                     textStack(languageLines[currentLanguage]!['gameRules']!,
-                        textSize: 35, color: Colors.lightGreenAccent),
+                        textSize: 30, color: Colors.lightGreenAccent),
                   ],
                 ),
                 const SizedBox(height: 10),
