@@ -74,7 +74,7 @@ class _MyAudioPlayerState extends State<MyAudioPlayer> {
     // double deviceWidth = MediaQuery.of(context).size.width;
     // double deviceHeight = MediaQuery.of(context).size.height;
     return IconButton(
-        icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
+        icon: Icon(isMuted ? Icons.music_off : Icons.music_note),
         // iconSize: 5,
         // iconSize: deviceHeight * 0.05,
         style: ButtonStyle(

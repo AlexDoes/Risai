@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class OpaqueBox extends StatelessWidget {
   const OpaqueBox(
@@ -22,7 +23,9 @@ class OpaqueBox extends StatelessWidget {
       child: Container(
         // width: 400,
         // height: 900,
-        color: Color.fromARGB(97, 240, 236, 239),
+        color: kIsWeb
+            ? const Color.fromARGB(97, 240, 236, 239)
+            : Color.fromARGB(86, 255, 140, 129),
         child: Stack(
           children: [
             // Image.asset('assets/images/mascotcoral.png',

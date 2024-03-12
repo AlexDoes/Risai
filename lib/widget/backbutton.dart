@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 Widget backButton(BuildContext context, {VoidCallback? setLoading}) {
   return Positioned(
-      top: 25,
-      left: -10,
+      top: kIsWeb ? 25 : 10,
+      left: kIsWeb ? -10 : -20,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.lightGreen[300], // Update the color to a lighter shade
