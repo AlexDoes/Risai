@@ -116,11 +116,12 @@ class _UnityWebGamePageState extends State<UnityWebGamePage> {
                       //     : Text('sadasds'),
                       Container(
                         constraints: BoxConstraints(
-                          minWidth: kIsWeb ? 735 : screenSize.width,
-                          minHeight: kIsWeb ? 790 : screenSize.height - 50,
+                          minWidth: kIsWeb ? 650 : screenSize.width,
+                          minHeight:
+                              kIsWeb ? 790 - 100 : screenSize.height - 50,
                         ),
                         width:
-                            kIsWeb ? screenSize.height * .75 : screenSize.width,
+                            kIsWeb ? screenSize.height * .8 : screenSize.width,
                         height:
                             kIsWeb ? screenSize.height : screenSize.height - 50,
                         child: FutureBuilder(

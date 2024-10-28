@@ -236,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         maxWidth: maxWidth,
                         maxHeight: maxHeight,
                         minWidth: 400,
-                        minHeight: 696,
+                        minHeight: 690,
                       )
                     : null,
                 decoration: BoxDecoration(
